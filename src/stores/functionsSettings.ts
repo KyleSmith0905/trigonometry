@@ -28,7 +28,6 @@ export const useFunctionsSettings = defineStore('functionsSettings', () => {
   }
 
   const changeFunctionEquation = (functionName: FunctionNames, newValue: FunctionEquations) => {
-    console.log(newValue);
     functionsMap.value[functionName].value.equation = newValue;
   }
 

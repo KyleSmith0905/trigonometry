@@ -3,8 +3,10 @@
   import { convertBoxToWalls, mapToGraph, pointsDistance, pointsToSlope, rayTraceToWall } from '@/helpers/graph';
   import { ref } from 'vue';
   import { radiansToDegrees, roundNumbers } from '@/helpers/math';
+  import { useFunctionsSettings } from '@/stores/functionsSettings';
 
   const draggablePointsStore = useDraggablePoints();
+  const functionsSettingsStore = useFunctionsSettings();
 
   const tangentPointAngle = ref({x: 0, y: 0});
   const textPosition = ref({x: 0, y: 0})
@@ -37,8 +39,10 @@
 
     // Writes the equation into 
     const equation = `secant(${roundNumbers(radiansToDegrees(angle))}°)}`;
-    const answer = roundNumbers(1 / Math.cos(angle), 1);
-    secantEquation.value = [equation, answer].join(' = ')
+    const answer = `${roundNumbers(1 / Math.cos(angle), 1)}`;
+    if (functionsSettingsStore.secant.equation === 'answer') secantEquation.value = answer;
+    if (functionsSettingsStore.secant.equation === 'equation') secantEquation.value = equation;
+    if (functionsSettingsStore.secant.equation === 'full') secantEquation.value = [equation, answer].join(' = ');
   }
   setTimeout(() => {
     updateDraggablePoints(draggablePointsStore);

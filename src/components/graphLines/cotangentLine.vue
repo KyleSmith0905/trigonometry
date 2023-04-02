@@ -3,13 +3,15 @@
   import { convertBoxToWalls, mapToGraph, pointsAngle, pointsDistance, pointsToSlope, rayTraceToWall } from '@/helpers/graph';
   import { ref } from 'vue';
   import { radiansToDegrees, roundNumbers } from '@/helpers/math';
+  import { useFunctionsSettings } from '@/stores/functionsSettings';
 
   const draggablePointsStore = useDraggablePoints();
+  const functionsSettingsStore = useFunctionsSettings();
 
   const cotangentPointTop = ref({x: 0, y: 0});
   const cotangentPointAxis = ref({x: 0, y: 0});
   const textPosition = ref({x: 0, y: 0})
-  const cosineEquation = ref('');
+  const cotangentEquation = ref('');
 
   const updateDraggablePoints = (newStore: typeof draggablePointsStore) => {
     const points = newStore.points;
@@ -52,8 +54,10 @@
 
     // Writes the equation into 
     const equation = `cotangent(${roundNumbers(radiansToDegrees(angle))}°)`;
-    const answer = roundNumbers(1 / Math.tan(angle), 1);
-    cosineEquation.value = [equation, answer].join(' = ')
+    const answer = `${roundNumbers(1 / Math.tan(angle), 1)}`;
+    if (functionsSettingsStore.cotangent.equation === 'answer') cotangentEquation.value = answer;
+    if (functionsSettingsStore.cotangent.equation === 'equation') cotangentEquation.value = equation;
+    if (functionsSettingsStore.cotangent.equation === 'full') cotangentEquation.value = [equation, answer].join(' = ');
   }
   setTimeout(() => {
     updateDraggablePoints(draggablePointsStore);
@@ -75,5 +79,5 @@
     text-anchor="middle"
     stroke-linecap='square'
     class="graph-text fill-green-400"
-  >{{ cosineEquation }}</text>
+  >{{ cotangentEquation }}</text>
 </template>

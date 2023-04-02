@@ -3,13 +3,15 @@
   import { convertBoxToWalls, mapToGraph, pointsAngle, pointsDistance, pointsToSlope, rayTraceToWall } from '@/helpers/graph';
   import { ref } from 'vue';
   import { radiansToDegrees, roundNumbers } from '@/helpers/math';
+  import { useFunctionsSettings } from '@/stores/functionsSettings';
 
   const draggablePointsStore = useDraggablePoints();
+  const functionsSettingsStore = useFunctionsSettings();
 
   const tangentPointTop = ref({x: 0, y: 0});
   const tangentPointAxis = ref({x: 0, y: 0});
   const textPosition = ref({x: 0, y: 0})
-  const cosineEquation = ref('');
+  const tangentEquation = ref('');
 
   const updateDraggablePoints = (newStore: typeof draggablePointsStore) => {
     const points = newStore.points;
@@ -49,10 +51,12 @@
     }
 
     // Writes the equation into 
-    const scale = pointsDistance(points.main, points.angle);
-    const equation = `tangent(${roundNumbers(radiansToDegrees(angle))}°) * ${roundNumbers(scale, 1)}`;
-    const answer = roundNumbers(Math.tan(angle) * scale, 1);
-    cosineEquation.value = [equation, answer].join(' = ')
+    const equation = `tangent(${roundNumbers(radiansToDegrees(angle))}°)`;
+    const answer = `${roundNumbers(Math.tan(angle), 1)}`;
+
+    if (functionsSettingsStore.tangent.equation === 'answer') tangentEquation.value = answer;
+    if (functionsSettingsStore.tangent.equation === 'equation') tangentEquation.value = equation;
+    if (functionsSettingsStore.tangent.equation === 'full') tangentEquation.value = [equation, answer].join(' = ');
   }
   setTimeout(() => {
     updateDraggablePoints(draggablePointsStore);
@@ -74,5 +78,5 @@
     :dominant-baseline="draggablePointsStore.points.angle.y > 0 ? 'hanging' : 'text-top'"
     stroke-linecap='square'
     class="graph-text fill-yellow-400"
-  >{{ cosineEquation }}</text>
+  >{{ tangentEquation }}</text>
 </template>

@@ -1,10 +1,12 @@
 <script setup lang="ts">
   import { useDraggablePoints } from '@/stores/draggablePoints';
+  import { useFunctionsSettings } from '@/stores/functionsSettings';
   import { convertBoxToWalls, mapToGraph, pointsDistance, pointsToSlope, rayTraceToWall } from '@/helpers/graph';
   import { ref } from 'vue';
   import { radiansToDegrees, roundNumbers } from '@/helpers/math';
 
   const draggablePointsStore = useDraggablePoints();
+  const functionsSettingsStore = useFunctionsSettings();
 
   const cotangentPointAngle = ref({x: 0, y: 0});
   const textPosition = ref({x: 0, y: 0})
@@ -37,8 +39,10 @@
 
     // Writes the equation into 
     const equation = `cosecant(${roundNumbers(radiansToDegrees(angle))}°)`;
-    const answer = roundNumbers(1 / Math.sin(angle), 1);
-    cosecantEquation.value = [equation, answer].join(' = ')
+    const answer = `${roundNumbers(1 / Math.sin(angle), 1)}`;
+    if (functionsSettingsStore.cosecant.equation === 'answer') cosecantEquation.value = answer;
+    if (functionsSettingsStore.cosecant.equation === 'equation') cosecantEquation.value = equation;
+    if (functionsSettingsStore.cosecant.equation === 'full') cosecantEquation.value = [equation, answer].join(' = ');
   }
   setTimeout(() => {
     updateDraggablePoints(draggablePointsStore);

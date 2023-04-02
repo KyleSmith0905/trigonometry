@@ -3,8 +3,10 @@
   import { mapToGraph } from '@/helpers/graph';
   import { ref } from 'vue';
   import { radiansToDegrees, roundNumbers } from '@/helpers/math';
+  import { useFunctionsSettings } from '@/stores/functionsSettings';
 
   const draggablePointsStore = useDraggablePoints();
+  const functionsSettingsStore = useFunctionsSettings();
 
   const axisPointNew = ref({x: 0, y: 0});
   const textPosition = ref({x: 0, y: 0})
@@ -23,8 +25,10 @@
 
     // Writes the equation into 
     const equation = `sine(${roundNumbers(radiansToDegrees(angle))}°)`;
-    const answer = roundNumbers(Math.sin(angle), 1);
-    sineEquation.value = [equation, answer].join(' = ')
+    const answer = `${roundNumbers(Math.sin(angle), 1)}`;
+    if (functionsSettingsStore.sine.equation === 'answer') sineEquation.value = answer;
+    if (functionsSettingsStore.sine.equation === 'equation') sineEquation.value = equation;
+    if (functionsSettingsStore.sine.equation === 'full') sineEquation.value = [equation, answer].join(' = ');
   }
   setTimeout(() => {
     updateDraggablePoints(draggablePointsStore);

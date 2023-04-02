@@ -3,8 +3,10 @@
   import { mapToGraph } from '@/helpers/graph';
   import { ref } from 'vue';
   import { radiansToDegrees, roundNumbers } from '@/helpers/math';
+  import { useFunctionsSettings } from '@/stores/functionsSettings';
 
   const draggablePointsStore = useDraggablePoints();
+  const functionsSettingsStore = useFunctionsSettings();
 
   const axisPointNew = ref({x: 0, y: 0});
   const textPosition = ref({x: 0, y: 0})
@@ -23,8 +25,10 @@
 
     // Writes the equation into 
     const equation = `cosine(${roundNumbers(radiansToDegrees(angle))}°)`;
-    const answer = roundNumbers(Math.cos(angle), 1);
-    cosineEquation.value = [equation, answer].join(' = ')
+    const answer = `${roundNumbers(Math.cos(angle), 1)}`;
+    if (functionsSettingsStore.cosine.equation === 'answer') cosineEquation.value = answer;
+    if (functionsSettingsStore.cosine.equation === 'equation') cosineEquation.value = equation;
+    if (functionsSettingsStore.cosine.equation === 'full') cosineEquation.value = [equation, answer].join(' = ');
   }
   setTimeout(() => {
     updateDraggablePoints(draggablePointsStore);
