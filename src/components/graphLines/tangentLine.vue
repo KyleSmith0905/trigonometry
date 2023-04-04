@@ -1,12 +1,14 @@
 <script setup lang="ts">
   import { useDraggablePoints } from '@/stores/draggablePoints';
-  import { convertBoxToWalls, mapToGraph, pointsAngle, pointsDistance, pointsToSlope, rayTraceToWall } from '@/helpers/graph';
+  import { mapToGraph, pointsAngle, pointsDistance, pointsToSlope, rayTraceToWall } from '@/helpers/graph';
   import { ref } from 'vue';
   import { radiansToDegrees, roundNumbers } from '@/helpers/math';
   import { useFunctionsSettings } from '@/stores/functionsSettings';
+  import { useGraphDimensions } from '@/stores/graphDimensions';
 
   const draggablePointsStore = useDraggablePoints();
   const functionsSettingsStore = useFunctionsSettings();
+  const graphDimensionsStore = useGraphDimensions();
 
   const tangentPointTop = ref({x: 0, y: 0});
   const tangentPointAxis = ref({x: 0, y: 0});
@@ -30,16 +32,9 @@
       y: (Math.sin(adjustedAngle) * unitCircleRadius) + points.main.y,
     }
 
-    const boxBorder = convertBoxToWalls({
-      top: window.innerHeight * -0.02,
-      left: window.innerWidth * -0.02,
-      bottom: window.innerHeight * 0.02,
-      right: window.innerWidth * 0.02,
-    });
-
     // Bounds the main tangent line to the top
     const slopeData = pointsToSlope(tangentPoint, tangentPointAxis.value);
-    tangentPointTop.value = rayTraceToWall(slopeData, tangentPointAxis.value, boxBorder);
+    tangentPointTop.value = rayTraceToWall(slopeData, tangentPointAxis.value, graphDimensionsStore.walls);
     if (pointsDistance(tangentPoint, tangentPointAxis.value) < pointsDistance(tangentPointTop.value, tangentPointAxis.value)) {
       tangentPointTop.value = tangentPoint;
     }
@@ -62,6 +57,7 @@
     updateDraggablePoints(draggablePointsStore);
   });
   draggablePointsStore.$onAction((pointsData) => updateDraggablePoints(pointsData.store));
+  functionsSettingsStore.$onAction(() => setTimeout(() => updateDraggablePoints(draggablePointsStore)));
 </script>
 
 <template>

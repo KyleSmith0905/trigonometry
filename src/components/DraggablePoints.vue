@@ -2,10 +2,12 @@
   import { useDraggablePoints, type PointNames } from '../stores/draggablePoints';
   import { useGridMode, type GridModes } from '@/stores/gridMode';
   import { ref } from 'vue';
-import { pointsAngle, pointsDistance } from '@/helpers/graph';
+  import { pointsAngle, pointsDistance } from '@/helpers/graph';
+  import { useGraphDimensions } from '@/stores/graphDimensions';
 
   const draggablePointsStore = useDraggablePoints();
   const gridModeStore = useGridMode();
+  const graphDimensions = useGraphDimensions();
 
   const activePointName = ref<PointNames | null>(null);
   const pointsLocal = ref({
@@ -91,12 +93,12 @@ import { pointsAngle, pointsDistance } from '@/helpers/graph';
     let mouseX = 0;
     let mouseY = 0;
     if (event instanceof MouseEvent) {
-      mouseX = event.clientX - (window.innerWidth * 0.5);
-      mouseY = -1 * (event.clientY - (window.innerHeight * 0.5));
+      mouseX = event.clientX - graphDimensions.dimensions.left - (graphDimensions.dimensions.width * 0.5);
+      mouseY = -1 * (event.clientY - graphDimensions.dimensions.top - (graphDimensions.dimensions.height * 0.5));
     }
     else {
-      mouseX = event.touches[0].clientX - (window.innerWidth * 0.5);
-      mouseY = -1 * (event.touches[0].clientY - (window.innerHeight * 0.5));
+      mouseX = event.touches[0].clientX - graphDimensions.dimensions.left - (graphDimensions.dimensions.width * 0.5);
+      mouseY = -1 * (event.touches[0].clientY - graphDimensions.dimensions.top - (graphDimensions.dimensions.height * 0.5));
     }
     
     // Reduces the points range to the range of the grid

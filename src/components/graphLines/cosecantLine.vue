@@ -1,12 +1,14 @@
 <script setup lang="ts">
   import { useDraggablePoints } from '@/stores/draggablePoints';
   import { useFunctionsSettings } from '@/stores/functionsSettings';
-  import { convertBoxToWalls, mapToGraph, pointsDistance, pointsToSlope, rayTraceToWall } from '@/helpers/graph';
+  import { mapToGraph, pointsDistance, pointsToSlope, rayTraceToWall } from '@/helpers/graph';
   import { ref } from 'vue';
   import { radiansToDegrees, roundNumbers } from '@/helpers/math';
+  import { useGraphDimensions } from '@/stores/graphDimensions';
 
   const draggablePointsStore = useDraggablePoints();
   const functionsSettingsStore = useFunctionsSettings();
+  const graphDimensionsStore = useGraphDimensions();
 
   const cotangentPointAngle = ref({x: 0, y: 0});
   const textPosition = ref({x: 0, y: 0})
@@ -17,16 +19,9 @@
     const cotangentPoint = newStore.cotangentPoint;
     const angle = newStore.angle;
 
-    const boxBorder = convertBoxToWalls({
-      top: window.innerHeight * -0.02,
-      left: window.innerWidth * -0.02,
-      bottom: window.innerHeight * 0.02,
-      right: window.innerWidth * 0.02,
-    });
-
     // Bounds the line connecting the tangent and the angle point.
     const angleSlopeData = pointsToSlope(cotangentPoint, points.main);
-    cotangentPointAngle.value = rayTraceToWall(angleSlopeData, points.main, boxBorder);
+    cotangentPointAngle.value = rayTraceToWall(angleSlopeData, points.main, graphDimensionsStore.walls);
     if (pointsDistance(cotangentPoint, points.main) < pointsDistance(cotangentPointAngle.value, points.main)) {
       cotangentPointAngle.value = cotangentPoint;
     }
@@ -48,6 +43,7 @@
     updateDraggablePoints(draggablePointsStore);
   });
   draggablePointsStore.$onAction((pointsData) => updateDraggablePoints(pointsData.store));
+  functionsSettingsStore.$onAction(() => setTimeout(() => updateDraggablePoints(draggablePointsStore)));
 </script>
 
 <template>

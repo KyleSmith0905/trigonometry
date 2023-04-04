@@ -14,7 +14,7 @@
   }
 </script>
 <template>
-  <div class="flex basis-0">
+  <div class="grid grid-cols-3">
     <button
       v-for="options of props.options"
       @click="changeWrapper(options.value)"

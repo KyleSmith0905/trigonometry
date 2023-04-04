@@ -1,9 +1,11 @@
 <script setup lang="ts">
   import { useDraggablePoints } from '@/stores/draggablePoints';
-  import { invertSlopeOnPoint, pointsToSlope, mapToGraph, rayTraceToWall, convertBoxToWalls } from '@/helpers/graph';
+  import { invertSlopeOnPoint, pointsToSlope, mapToGraph, rayTraceToWall } from '@/helpers/graph';
   import { ref } from 'vue';
+import { useGraphDimensions } from '@/stores/graphDimensions';
 
   const draggablePointsStore = useDraggablePoints();
+  const graphDimensionsStore = useGraphDimensions();
 
   // Update lines showing points between two values.
   const startXAxis = ref({x: 0, y: 0});
@@ -11,12 +13,7 @@
   const startYAxis = ref({x: 0, y: 0});
   const endYAxis = ref({x: 0, y: 0});
   const updateDraggablePoints = (points: typeof draggablePointsStore.points) => {
-    const boxBorder = convertBoxToWalls({
-      top: window.innerHeight * -0.02,
-      left: window.innerWidth * -0.02,
-      bottom: window.innerHeight * 0.02,
-      right: window.innerWidth * 0.02,
-    });
+    const boxBorder = graphDimensionsStore.walls;
 
     const xAxisLine = pointsToSlope(points.main, points.axis);
     startXAxis.value = rayTraceToWall(xAxisLine, points.main, boxBorder);

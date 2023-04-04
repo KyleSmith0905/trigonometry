@@ -34,6 +34,7 @@
     updateDraggablePoints(draggablePointsStore);
   });
   draggablePointsStore.$onAction((pointsData) => updateDraggablePoints(pointsData.store));
+  functionsSettingsStore.$onAction(() => setTimeout(() => updateDraggablePoints(draggablePointsStore)));
 </script>
 
 <template>

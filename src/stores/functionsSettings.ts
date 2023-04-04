@@ -1,7 +1,7 @@
 import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 
-interface FunctionData {
+export interface FunctionData {
   active: boolean;
   name: string;
   equation: 'full' | 'answer' | 'equation';

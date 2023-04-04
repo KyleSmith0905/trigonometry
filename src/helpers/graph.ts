@@ -1,3 +1,4 @@
+import { useGraphDimensions } from "@/stores/graphDimensions";
 import { pythagorean } from "./math";
 
 const pointsToSlope = (start: {x: number, y: number}, end: {x: number, y: number}) => {
@@ -129,9 +130,14 @@ const rayTraceToWall = (
  * Map the cartesian coordinates to pixels on the svg
  */
 const mapToGraph = (coordinates: {x: number, y: number}, axis: 'x' | 'y' | 'both' = 'both') => {
+  const graphDimensionsStore = useGraphDimensions();
+
   if (isNaN(coordinates?.x) || isNaN(coordinates?.y)) return '0,0';
   const scaled = {x: coordinates.x * 25, y: coordinates.y * 25}
-  const centered = {x: scaled.x + (window.innerWidth * 0.5), y: -scaled.y + (window.innerHeight * 0.5)}
+  const centered = {
+    x: scaled.x + (graphDimensionsStore.dimensions.width * 0.5),
+    y: -scaled.y + (graphDimensionsStore.dimensions.height * 0.5),
+  }
   if (axis === 'both') return `${centered.x},${centered.y}`;
   else if (axis === 'y') return `${centered.y}`;
   else if (axis === 'x') return `${centered.x}`;
