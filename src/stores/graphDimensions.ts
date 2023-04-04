@@ -7,10 +7,10 @@ export const useGraphDimensions = defineStore('graphDimensions', () => {
   
   const boundingBox = computed(() => {
     return {
-      top: window.innerHeight * -0.02,
-      left: window.innerWidth * -0.02,
-      bottom: window.innerHeight * 0.02,
-      right: window.innerWidth * 0.02,
+      top: dimensions.value.height * -0.02,
+      left: dimensions.value.width * -0.02,
+      bottom: dimensions.value.height * 0.02,
+      right: dimensions.value.width * 0.02,
     };
   })
 

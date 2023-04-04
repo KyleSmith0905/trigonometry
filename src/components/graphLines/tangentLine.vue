@@ -58,6 +58,7 @@
   });
   draggablePointsStore.$onAction((pointsData) => updateDraggablePoints(pointsData.store));
   functionsSettingsStore.$onAction(() => setTimeout(() => updateDraggablePoints(draggablePointsStore)));
+  graphDimensionsStore.$subscribe(() => updateDraggablePoints(draggablePointsStore));
 </script>
 
 <template>

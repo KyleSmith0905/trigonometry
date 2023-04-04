@@ -26,6 +26,7 @@ import { useGraphDimensions } from '@/stores/graphDimensions';
     updateDraggablePoints(draggablePointsStore.points);
   });
   draggablePointsStore.$subscribe((_actionData, pointsData) => updateDraggablePoints(pointsData.points));
+  graphDimensionsStore.$subscribe(() => updateDraggablePoints(draggablePointsStore.points));
 </script>
 
 <template>
