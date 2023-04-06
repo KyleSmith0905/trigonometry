@@ -11,4 +11,8 @@ const roundNumbers = (num: number, round: number = 0) => {
   return Math.round((num + Number.EPSILON) * multiplier) / multiplier;
 }
 
-export { pythagorean, radiansToDegrees, roundNumbers };
+const clamp = (num: number, min: number, max: number) => {
+  return Math.min(Math.max(num, min), max)
+}
+
+export { pythagorean, radiansToDegrees, roundNumbers, clamp };

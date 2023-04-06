@@ -7,6 +7,7 @@
   import { useGraphDimensions } from '@/stores/graphDimensions';
   import { ref } from 'vue';
   import { useResizeObserver } from '@vueuse/core';
+  import { useHead } from '@vueuse/head';
   
   const graphDimensionsStore = useGraphDimensions();
   const graphContainerRef = ref<HTMLDivElement | null>(null);
@@ -16,10 +17,16 @@
       graphContainerRef.value?.getBoundingClientRect() ?? entries[0].contentRect
     );
   })
+
+  useHead({
+    meta: [
+      {name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'},
+    ]
+  })
 </script>
 
 <template>
-  <div class="flex">
+  <div class="flex" >
     <MenuOverlay/>
     <div ref="graphContainerRef" class="w-full h-screen relative">
       <GridBackground/>

@@ -2,12 +2,21 @@
   import { useDraggablePoints, type PointNames } from '../stores/draggablePoints';
   import { useGridMode, type GridModes } from '@/stores/gridMode';
   import { ref } from 'vue';
-  import { pointsAngle, pointsDistance } from '@/helpers/graph';
+  import { pointsAngle, pointsDistance, mapToGraph } from '@/helpers/graph';
   import { useGraphDimensions } from '@/stores/graphDimensions';
+  import { Device, type DeviceInfo } from '@capacitor/device';
 
   const draggablePointsStore = useDraggablePoints();
   const gridModeStore = useGridMode();
   const graphDimensions = useGraphDimensions();
+
+  const deviceInfoPromise = Device.getInfo();
+  const deviceInfo = ref<DeviceInfo | null>(null);
+  const isMobileDevice = ref(false);
+  deviceInfoPromise.then((deviceInfoResolve) => {
+    deviceInfo.value = deviceInfoResolve;
+    isMobileDevice.value = ['ios', 'android'].includes(deviceInfo.value.operatingSystem);
+  })
 
   const activePointName = ref<PointNames | null>(null);
   const pointsLocal = ref({
@@ -48,7 +57,7 @@
   const dragStart = (event: MouseEvent | TouchEvent, pointName: PointNames) => {
     activePointName.value = pointName;
     event.preventDefault()
-    
+
     window.addEventListener('touchend', dragEnd);
     window.addEventListener('mouseup', dragEnd);
     window.addEventListener('touchmove', drag);
@@ -128,16 +137,18 @@
 </script>
 
 <template>
-  <div class="absolute flex items-center justify-center w-full h-full overflow-hidden">
+  <div class="absoluter top-0 w-full h-full overflow-hidden">
     <template v-for="(value, pointName) in draggablePointsStore.points">
       <div
         v-if="pointsLocal[pointName].visible"
         @touchstart="dragStart($event, pointName)"
         @mousedown="dragStart($event, pointName)"
         :key="pointName"
-        :style="{marginBottom: `${value.y * 50}px`, marginLeft: `${value.x * 50}px`}"
+        :style="{top: `${mapToGraph(value, 'y')}px`, left: `${mapToGraph(value, 'x')}px`}"
         :class="{
-          'absolute w-4 h-4 bg-slate-800 ring-2 ring-slate-900 rounded-full transition-transform cursor-pointer': true,
+          'absolute bg-slate-800 rounded-full transition-transform cursor-pointer select-none': true,
+          'w-4 h-4 -ml-2 -mt-2': !isMobileDevice,
+          'w-8 h-8 -ml-4 -mt-4': isMobileDevice,
           'scale-150': activePointName === pointName,
         }"
       ></div>

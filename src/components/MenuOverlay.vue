@@ -16,14 +16,20 @@
 
 <template>
   <div :class="{
-    'h-screen w-0 bg-slate-200 transition-all shadow-2xl z-20 overflow-hidden flex-shrink-0 overflow-y-auto': true,
-    'w-96': settingsMenuStore.active
+    'h-screen w-0 bg-slate-200 transition-all shadow-2xl z-20 overflow-hidden flex-shrink-0 overflow-y-auto touch-none': true,
+    'sm:w-96 w-screen': settingsMenuStore.active
   }">
-    <div class="w-96 px-2 grid grid-cols-1 divide-y divide-slate-300">
+    <div class="relative sm:w-96 w-screen px-2 grid grid-cols-1 divide-y divide-slate-300 transition-all">
       <div class="p-2">
         <h1 class="my-2 text-lg font-bold text-slate-900">Trigonometric Functions</h1>
         <div class="flex gap-2 flex-col">
-          <h2 class="my-1 text-lg font-bold text-center text-slate-600">Select Trigonometric Function </h2>
+          <button
+            @click="settingsMenuStore.toggleActive()"
+            class="absolute text-4xl top-2 right-2 rounded-full text-slate-800 hover:bg-slate-300 transition-colors"
+          >
+            <ion-icon class="block" name="close-circle-outline"></ion-icon>
+          </button>
+          <h2 class="my-1 text-lg font-bold text-center text-slate-600">Select Trigonometric Function</h2>
           <SelectButton
             @change="activeTrigonometricFunction = ($event as FunctionNames)"
             :options="[{label: 'Sine', value: 'sine'}, {label: 'Secant', value: 'secant'}, {label: 'Tangent', value: 'tangent'}, {label: 'Cosine', value: 'cosine'}, {label: 'Cosecant', value: 'cosecant'}, {label: 'Cotangent', value: 'cotangent'}]"

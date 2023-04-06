@@ -2,7 +2,7 @@
   import { useDraggablePoints } from '@/stores/draggablePoints';
   import { invertSlopeOnPoint, pointsToSlope, mapToGraph, rayTraceToWall } from '@/helpers/graph';
   import { ref } from 'vue';
-import { useGraphDimensions } from '@/stores/graphDimensions';
+  import { useGraphDimensions } from '@/stores/graphDimensions';
 
   const draggablePointsStore = useDraggablePoints();
   const graphDimensionsStore = useGraphDimensions();

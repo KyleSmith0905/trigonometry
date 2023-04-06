@@ -12,12 +12,12 @@ export type FunctionNames = 'sine' | 'secant' | 'tangent' | 'cosine' | 'cosecant
 export type FunctionEquations = FunctionData['equation'];
 
 export const useFunctionsSettings = defineStore('functionsSettings', () => {
-  const sine = ref<FunctionData>({active: true, equation: 'answer', name: 'Sine'});
-  const secant = ref<FunctionData>({active: false, equation: 'answer', name: 'Secant'});
-  const tangent = ref<FunctionData>({active: true, equation: 'answer', name: 'Tangent'});
-  const cosine = ref<FunctionData>({active: true, equation: 'answer', name: 'Cosine'});
-  const cosecant = ref<FunctionData>({active: false, equation: 'answer', name: 'Cosecant'});
-  const cotangent = ref<FunctionData>({active: false, equation: 'answer', name: 'Cotangent'});
+  const sine = ref<FunctionData>({active: true, equation: 'full', name: 'Sine'});
+  const secant = ref<FunctionData>({active: false, equation: 'full', name: 'Secant'});
+  const tangent = ref<FunctionData>({active: true, equation: 'full', name: 'Tangent'});
+  const cosine = ref<FunctionData>({active: true, equation: 'full', name: 'Cosine'});
+  const cosecant = ref<FunctionData>({active: false, equation: 'full', name: 'Cosecant'});
+  const cotangent = ref<FunctionData>({active: false, equation: 'full', name: 'Cotangent'});
 
   const functionsMap = computed(() => {
     return {sine, secant, tangent, cosine, cosecant, cotangent};
