@@ -28,3 +28,4 @@ coverage
 *.sw?
 
 android/app/src/main/res/*.png
+.vercel

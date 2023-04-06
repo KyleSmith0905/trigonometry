@@ -17,22 +17,14 @@ const router = createRouter({
       component: () => import('../views/HomeView.vue')
     },
     {
+      path: '/contact',
+      name: 'contact',
+      component: () => import('../views/ContactView.vue')
+    },
+    {
       path: '/graph',
       name: 'graph',
       component: () => import('../views/GraphView.vue'),
-      meta: {
-        title: 'About Page - Example App',
-        metaTags: [
-          {
-            name: 'description',
-            content: 'The about page of our example app.'
-          },
-          {
-            property: 'og:description',
-            content: 'The about page of our example app.'
-          }
-        ]
-      },
     }
   ]
 })
