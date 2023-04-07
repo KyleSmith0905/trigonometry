@@ -10,7 +10,7 @@ const router = createRouter({
       beforeEnter: () => {
         const isNative = Capacitor.isNativePlatform();
         if (isNative) {
-          return {path: '/graph'}
+          return {path: '/graph'};
         }
         return true;
       },
@@ -30,7 +30,7 @@ const router = createRouter({
       path: '/graph',
       name: 'graph',
       component: () => import('../views/GraphView.vue'),
-    }
+    },
   ]
 })
 

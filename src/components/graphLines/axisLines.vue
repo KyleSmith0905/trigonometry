@@ -3,7 +3,7 @@
   import { invertSlopeOnPoint, pointsToSlope, mapToGraph, rayTraceToWall } from '@/helpers/graph';
   import { ref } from 'vue';
   import { useGraphDimensions } from '@/stores/graphDimensions';
-  import GraphText from '../GraphText.vue';
+  import { xor } from '@/helpers/logic';
 
   const draggablePointsStore = useDraggablePoints();
   const graphDimensionsStore = useGraphDimensions();
@@ -16,12 +16,25 @@
   const updateDraggablePoints = (points: typeof draggablePointsStore.points) => {
     const boxBorder = graphDimensionsStore.walls;
 
+    const invertDirection = (direction: 'left' | 'right') => direction === 'left' ? 'right' : 'left'
+
     const xAxisLine = pointsToSlope(points.main, points.axis);
     startXAxis.value = rayTraceToWall(xAxisLine, points.main, boxBorder);
-    endXAxis.value = rayTraceToWall({...xAxisLine, direction: xAxisLine.direction === 'left' ? 'right' : 'left'}, points.main, boxBorder);
+    endXAxis.value = rayTraceToWall({...xAxisLine, direction: invertDirection(xAxisLine.direction)}, points.main, boxBorder);
+
     const yAxisLine = invertSlopeOnPoint(xAxisLine, points.main);
-    startYAxis.value = rayTraceToWall(yAxisLine, points.main, boxBorder);
-    endYAxis.value = rayTraceToWall({...yAxisLine, direction: yAxisLine.direction === 'left' ? 'right' : 'left'}, points.main, boxBorder);
+
+    startYAxis.value = rayTraceToWall(
+      {...yAxisLine, direction: xor(Math.abs(yAxisLine.slope) === Infinity ? yAxisLine.slope > 0 : yAxisLine.slope <= 0, yAxisLine.direction === 'left') ? 'left' : 'right'},
+      points.main,
+      boxBorder,
+    );
+
+    endYAxis.value = rayTraceToWall(
+      {...yAxisLine, direction: xor(Math.abs(yAxisLine.slope) === Infinity ? yAxisLine.slope > 0 : yAxisLine.slope <= 0, yAxisLine.direction === 'left') ? 'right' : 'left'},
+      points.main,
+      boxBorder,
+    );
   }
   setTimeout(() => {
     updateDraggablePoints(draggablePointsStore.points);
@@ -64,7 +77,7 @@
     text-anchor="middle"
     dominant-baseline="middle"
     class="graph-text"
-  >-y</text>
+  >+y</text>
   <text
     :x="mapToGraph(endYAxis, 'x')" :y="mapToGraph(endYAxis, 'y')"
     :dx="endYAxis.x > 0 ? -20 : 20"
@@ -72,7 +85,7 @@
     text-anchor="middle"
     dominant-baseline="middle"
     class="graph-text"
-  >+y</text>
+  >-y</text>
 </template>
 
 <style scoped>
