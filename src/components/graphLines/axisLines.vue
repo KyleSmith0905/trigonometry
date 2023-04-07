@@ -4,6 +4,7 @@
   import { ref } from 'vue';
   import { useGraphDimensions } from '@/stores/graphDimensions';
   import { xor } from '@/helpers/logic';
+import GraphText from '../GraphText.vue';
 
   const draggablePointsStore = useDraggablePoints();
   const graphDimensionsStore = useGraphDimensions();
@@ -54,38 +55,30 @@
     class="stroke-slate-500 fill-transparent opacity-100 stroke-2"
     stroke-linecap='square'
   ></path>
-  <text
-    :x="mapToGraph(startXAxis, 'x')" :y="mapToGraph(startXAxis, 'y')"
-    :dx="startXAxis.x > 0 ? -20 : 20"
-    :dy="startXAxis.y > 0 ? 20 : -20"
-    text-anchor="middle"
-    dominant-baseline="middle"
-    class="graph-text"
-  >-x</text>
-  <text
-    :x="mapToGraph(endXAxis, 'x')" :y="mapToGraph(endXAxis, 'y')"
-    :dx="endXAxis.x > 0 ? -20 : 20"
-    :dy="endXAxis.y > 0 ? 20 : -20"
-    text-anchor="middle"
-    dominant-baseline="middle"
-    class="graph-text"
-  >+x</text>
-  <text
-    :x="mapToGraph(startYAxis, 'x')" :y="mapToGraph(startYAxis, 'y')"
-    :dx="startYAxis.x > 0 ? -20 : 20"
-    :dy="startYAxis.y > 0 ? 20 : -20"
-    text-anchor="middle"
-    dominant-baseline="middle"
-    class="graph-text"
-  >+y</text>
-  <text
-    :x="mapToGraph(endYAxis, 'x')" :y="mapToGraph(endYAxis, 'y')"
-    :dx="endYAxis.x > 0 ? -20 : 20"
-    :dy="endYAxis.y > 0 ? 20 : -20"
-    text-anchor="middle"
-    dominant-baseline="middle"
-    class="graph-text"
-  >-y</text>
+  <GraphText
+    :position="startXAxis"
+    :alignX="startXAxis.x > 0 ? 'right' : 'left'"
+    :alignY="startXAxis.y > 0 ? 'top' : 'bottom'"
+    text="-x"
+  />
+  <GraphText
+    :position="endXAxis"
+    :alignX="endXAxis.x > 0 ? 'right' : 'left'"
+    :alignY="endXAxis.y > 0 ? 'top' : 'bottom'"
+    text="+x"
+  />
+  <GraphText
+    :position="startYAxis"
+    :alignX="startYAxis.x > 0 ? 'right' : 'left'"
+    :alignY="startYAxis.y > 0 ? 'top' : 'bottom'"
+    text="+y"
+  />
+  <GraphText
+    :position="endYAxis"
+    :alignX="endYAxis.x > 0 ? 'right' : 'left'"
+    :alignY="endYAxis.y > 0 ? 'top' : 'bottom'"
+    text="-y"
+  />
 </template>
 
 <style scoped>
