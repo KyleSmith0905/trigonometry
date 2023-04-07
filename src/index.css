@@ -16,4 +16,16 @@
       0rem 0rem 0.6rem theme('colors.slate.100'),
       0rem 0rem 0.6rem theme('colors.slate.100')
   }
+
+  .header {
+    @apply font-mono text-2xl font-bold text-center text-slate-700;
+  }
+
+  .subheader {
+    @apply font-mono text-lg font-bold text-center text-slate-700;
+  }
+
+  .paragraph {
+    @apply text-slate-800;
+  }
 }

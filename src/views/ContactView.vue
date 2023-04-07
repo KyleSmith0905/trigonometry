@@ -18,8 +18,8 @@
           <p class="text-slate-800 mt-2">We are always looking for ways to improve the Trigonometry Simulator, and we appreciate your feedback. Join our Discord server today and let us know what you think!</p>
         </div>
         <div class="flex items-center gap-2">
-          <a class="whitespace-nowrap text-lg" href="dJKUYq5qEn">https://discord.gg/dJKUYq5qEn</a>
-          <ion-icon class="text-2xl" name='logo-discord'></ion-icon>
+          <a class="whitespace-nowrap text-lg text-slate-800" href="https://discord.gg/dJKUYq5qEn">dJKUYq5qEn</a>
+          <ion-icon class="text-2xl text-slate-800" name='logo-discord'></ion-icon>
         </div>
       </div>
     </div>
@@ -30,8 +30,8 @@
           <p class="text-slate-800">If you would prefer to reach out to us directly, you can also email us at my personal email. I am happy to help you with any questions or concerns you may have.</p>
         </div>
         <div class="flex items-center gap-2">
-          <a class="whitespace-nowrap text-lg" href="mailto:me@yskkyle.com">me@yskkyle.com</a>
-          <ion-icon class="text-2xl" name='mail'></ion-icon>
+          <a class="whitespace-nowrap text-lg text-slate-800" href="mailto:me@yskkyle.com">me@yskkyle.com</a>
+          <ion-icon class="text-2xl text-slate-800" name='mail'></ion-icon>
         </div>
       </div>
     </div>
@@ -40,11 +40,11 @@
       <div class="flex flex-wrap sm:flex-nowrap gap-6 max-w-4xl w-10/12 mx-auto">
         <div class="h-fit my-auto">
           <p class="text-slate-800">If you have an time-sensitive matter, a text would likely reach me the soonest. Please use Discord or email for any other inquiries unless it is extremely urgent.</p>
-          <p class="text-slate-800 mt-2">This is my personal phone, and I do not answer unsolicited calls (due to a potential spam callers).</p>
+          <p class="text-slate-800 mt-2">This is my personal phone. I do not answer unsolicited calls (due to potential spam callers).</p>
         </div>
         <div class="flex items-center gap-2">
-          <a class="whitespace-nowrap text-lg" href="tel:941-225-5815">+1 (941) 225-5815</a>
-          <ion-icon class="text-2xl" name='chatbox-ellipses'></ion-icon>
+          <a class="whitespace-nowrap text-lg text-slate-800" href="tel:941-225-5815">+1 (941) 225-5815</a>
+          <ion-icon class="text-2xl text-slate-800" name='chatbox-ellipses'></ion-icon>
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@
   import { invertSlopeOnPoint, pointsToSlope, mapToGraph, rayTraceToWall } from '@/helpers/graph';
   import { ref } from 'vue';
   import { useGraphDimensions } from '@/stores/graphDimensions';
+  import GraphText from '../GraphText.vue';
 
   const draggablePointsStore = useDraggablePoints();
   const graphDimensionsStore = useGraphDimensions();

@@ -22,6 +22,11 @@ const router = createRouter({
       component: () => import('../views/ContactView.vue')
     },
     {
+      path: '/privacy',
+      name: 'privacy',
+      component: () => import('../views/PrivacyView.vue')
+    },
+    {
       path: '/graph',
       name: 'graph',
       component: () => import('../views/GraphView.vue'),

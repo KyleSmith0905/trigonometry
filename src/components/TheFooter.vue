@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-slate-100 py-4">
+  <div class="bg-slate-200 py-4">
     <div class="max-w-4xl w-10/12 mx-auto">
       <p class="text-center text-slate-700">
         Developed By
@@ -13,7 +13,7 @@
           <a target="_blank" href="https://discord.gg/dJKUYq5qEn">Support And Feedback</a>
         </div>
         <div>
-          <a target="_blank" href="/privacy">Privacy Policy</a>
+          <router-link to="/privacy">Privacy Policy</router-link>
         </div>
       </div>
     </div>
