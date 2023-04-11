@@ -1,11 +1,16 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
+import { useRoute } from 'vue-router';
 
 export type GridModes = 'cartesian' | 'polar';
 const allGridModes: GridModes[] = ['cartesian', 'polar'];
 
 export const useGridMode = defineStore('gridMode', () => {
-  const gridMode = ref<GridModes>('polar');
+
+  const route = useRoute()
+
+  const gridMode = ref<GridModes>(route.name === 'graph' ? 'polar' : 'cartesian');
+  
   const setGridMode = (newGridMode: GridModes) => {
     gridMode.value = newGridMode;
   }
