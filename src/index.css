@@ -4,7 +4,7 @@
 
 @layer components {
   .graph-text {
-    @apply font-bold fill-slate-900 font-mono select-none;
+    @apply font-bold font-mono select-none;
     text-shadow:
       0rem 0rem 0.6rem theme('colors.slate.100'),
       0rem 0rem 0.6rem theme('colors.slate.100'),

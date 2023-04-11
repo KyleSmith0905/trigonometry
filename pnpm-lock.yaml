@@ -6,6 +6,7 @@ specifiers:
   '@capacitor/cli': ^4.7.1
   '@capacitor/core': ^4.7.1
   '@capacitor/device': ^4.1.0
+  '@capacitor/preferences': ^4.0.2
   '@rushstack/eslint-patch': ^1.2.0
   '@types/node': ^18.14.2
   '@vitejs/plugin-vue': ^4.0.0
@@ -37,6 +38,7 @@ dependencies:
   '@capacitor/cli': 4.7.1
   '@capacitor/core': 4.7.1
   '@capacitor/device': 4.1.0_@capacitor+core@4.7.1
+  '@capacitor/preferences': 4.0.2_@capacitor+core@4.7.1
   '@vueuse/core': 9.13.0_vue@3.2.47
   '@vueuse/head': 1.1.23_vue@3.2.47
   ionicons: 7.1.0
@@ -1326,6 +1328,14 @@ packages:
 
   /@capacitor/device/4.1.0_@capacitor+core@4.7.1:
     resolution: {integrity: sha512-BlcYb6e6m+vC1SxeyUDIUGfuNXdKEcpFPDCs/kxk2SByFc/BkvXeoy4NjY4qmTderGELofX9bta5Iy9JV7rGUg==}
+    peerDependencies:
+      '@capacitor/core': ^4.0.0
+    dependencies:
+      '@capacitor/core': 4.7.1
+    dev: false
+
+  /@capacitor/preferences/4.0.2_@capacitor+core@4.7.1:
+    resolution: {integrity: sha512-HgcRkMdVHSIV3TeQLZFmCaCeMWQ25wLyZZ7dA2f8Rw81Q1Nroxsi7HxTEGNqrWKSN9PNKBJD8vChr6eB2GNtZg==}
     peerDependencies:
       '@capacitor/core': ^4.0.0
     dependencies:

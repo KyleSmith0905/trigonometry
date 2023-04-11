@@ -5,6 +5,7 @@
   import { radiansToDegrees, roundNumbers } from '@/helpers/math';
   import { useFunctionsSettings } from '@/stores/functionsSettings';
   import { useGraphDimensions } from '@/stores/graphDimensions';
+  import GraphText from '../GraphText.vue';
 
   const draggablePointsStore = useDraggablePoints();
   const functionsSettingsStore = useFunctionsSettings();
@@ -67,13 +68,11 @@
     class="stroke-yellow-400 fill-transparent opacity-50 stroke-2"
     stroke-linecap='square'
   ></path>
-  <text
-    :x="mapToGraph(textPosition, 'x')"
-    :y="mapToGraph(textPosition, 'y')"
-    :dx="textPosition.x > 0 ? 20 : -20"
-    :text-anchor="textPosition.x > 0 ? 'start' : 'end'"
-    :dominant-baseline="draggablePointsStore.points.angle.y > 0 ? 'hanging' : 'text-top'"
-    stroke-linecap='square'
-    class="graph-text fill-yellow-400"
-  >{{ tangentEquation }}</text>
+  <GraphText
+    :position="textPosition"
+    :alignX="textPosition.x > 0 ? 'left' : 'right'"
+    :alignY="textPosition.y > 0 ? 'top' : 'bottom'"
+    :text="tangentEquation"
+    color="#facc15"
+  />
 </template>

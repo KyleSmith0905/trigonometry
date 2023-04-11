@@ -5,7 +5,7 @@ export type GridModes = 'cartesian' | 'polar';
 const allGridModes: GridModes[] = ['cartesian', 'polar'];
 
 export const useGridMode = defineStore('gridMode', () => {
-  const gridMode = ref<GridModes>('cartesian');
+  const gridMode = ref<GridModes>('polar');
   const setGridMode = (newGridMode: GridModes) => {
     gridMode.value = newGridMode;
   }

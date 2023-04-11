@@ -4,6 +4,7 @@
   import { ref } from 'vue';
   import { radiansToDegrees, roundNumbers } from '@/helpers/math';
   import { useFunctionsSettings } from '@/stores/functionsSettings';
+  import GraphText from '../GraphText.vue';
 
   const draggablePointsStore = useDraggablePoints();
   const functionsSettingsStore = useFunctionsSettings();
@@ -43,13 +44,11 @@
     class="stroke-red-400 fill-transparent opacity-50 stroke-2"
     stroke-linecap='square'
   ></path>
-  <text
-    :x="mapToGraph(textPosition, 'x')"
-    :y="mapToGraph(textPosition, 'y')"
-    :dx="textPosition.x > 0 ? 20 : -20"
-    :text-anchor="textPosition.x > 0 ? 'start' : 'end'"
-    :dominant-baseline="textPosition.y > 0 ? 'text-top' : 'hanging'"
-    stroke-linecap='square'
-    class="graph-text fill-red-400"
-  >{{ sineEquation }}</text>
+  <GraphText
+    :position="textPosition"
+    :alignX="textPosition.x > 0 ? 'left' : 'right'"
+    :alignY="textPosition.y > 0 ? 'top' : 'bottom'"
+    :text="sineEquation"
+    color="#f87171"
+  />
 </template>

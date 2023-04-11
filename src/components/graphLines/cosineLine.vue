@@ -4,6 +4,7 @@
   import { ref } from 'vue';
   import { radiansToDegrees, roundNumbers } from '@/helpers/math';
   import { useFunctionsSettings } from '@/stores/functionsSettings';
+  import GraphText from '../GraphText.vue';
 
   const draggablePointsStore = useDraggablePoints();
   const functionsSettingsStore = useFunctionsSettings();
@@ -40,16 +41,14 @@
 <template>
   <path
     :d="`M${mapToGraph(draggablePointsStore.points.angle)} L${mapToGraph(axisPointNew)}`"
-    class="stroke-blue-400 fill-transparent opacity-50 stroke-2"
+    class="stroke-green-400 fill-transparent opacity-50 stroke-2"
     stroke-linecap='square'
   ></path>
-  <text
-    :x="mapToGraph(textPosition, 'x')"
-    :y="mapToGraph(textPosition, 'y')"
-    :dy="draggablePointsStore.points.angle.y > 0 ? 20 : -20"
-    :text-anchor="textPosition.x > 0 ? 'end' : 'start'"
-    :dominant-baseline="draggablePointsStore.points.angle.y > 0 ? 'hanging' : 'text-top'"
-    stroke-linecap='square'
-    class="graph-text fill-blue-400"
-  >{{ cosineEquation }}</text>
+  <GraphText
+    :position="textPosition"
+    :alignX="textPosition.x <= 0 ? 'left' : 'right'"
+    :alignY="textPosition.y <= 0 ? 'top' : 'bottom'"
+    :text="cosineEquation"
+    color="#4ade80"
+  />
 </template>

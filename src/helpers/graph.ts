@@ -166,4 +166,16 @@ const pointIntersectionOnAxis = (center: {x: number, y: number}, rotation: numbe
   return getLineIntersection({from: axisLineFrom, to: axisLineTo}, {from: angleLineFrom, to: angleLineTo});
 }
 
-export { pointsToSlope, pointsDistance, pointsAngle, convertBoxToWalls, pointsTransform, rayTraceToWall, invertSlopeOnPoint, mapToGraph, getLineIntersection, pointIntersectionOnAxis };
+const rectanglesIntersect = (
+  a: {top: number, right: number, bottom: number, left: number},
+  b: {top: number, right: number, bottom: number, left: number},
+) => {
+  const aLeftOfB = a.right < b.left;
+  const aRightOfB = a.left > b.right;
+  const aAboveB = a.bottom > b.top;
+  const aBelowB = a.top < b.bottom;
+
+  return !( aLeftOfB || aRightOfB || aAboveB || aBelowB );
+}
+
+export { pointsToSlope, pointsDistance, pointsAngle, convertBoxToWalls, pointsTransform, rayTraceToWall, invertSlopeOnPoint, mapToGraph, getLineIntersection, pointIntersectionOnAxis, rectanglesIntersect };

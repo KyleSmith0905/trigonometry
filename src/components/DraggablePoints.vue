@@ -32,6 +32,7 @@
     },
   }) 
 
+  // Calculates which points are active by what coordinate mode is active
   const gridModeChanged = (gridMode: GridModes) => {
     if (gridMode === 'polar') {
       const lockDistance = pointsDistance(draggablePointsStore.points.main, draggablePointsStore.points.angle);
@@ -52,6 +53,7 @@
       }
     }
   }
+  gridModeChanged(gridModeStore.gridMode);
   gridModeStore.$subscribe((_actionData, gridData) => gridModeChanged(gridData.gridMode))
 
   const dragStart = (event: MouseEvent | TouchEvent, pointName: PointNames) => {

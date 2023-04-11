@@ -18,8 +18,8 @@
 <template>
   <div class="absolute flex items-center justify-center w-full h-full overflow-hidden">
     <svg width="100%" height="100%" ref="svgContainer">
-      <AxisLines/>
       <TriangleLines/>
+      <AxisLines/>
       <FullCircle
         v-if="gridModeStore.gridMode === 'polar'"
       />

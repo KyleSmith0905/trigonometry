@@ -4,7 +4,7 @@
   import { ref } from 'vue';
   import { useGraphDimensions } from '@/stores/graphDimensions';
   import { xor } from '@/helpers/logic';
-import GraphText from '../GraphText.vue';
+  import GraphText from '../GraphText.vue';
 
   const draggablePointsStore = useDraggablePoints();
   const graphDimensionsStore = useGraphDimensions();
@@ -14,6 +14,7 @@ import GraphText from '../GraphText.vue';
   const endXAxis = ref({x: 0, y: 0});
   const startYAxis = ref({x: 0, y: 0});
   const endYAxis = ref({x: 0, y: 0});
+
   const updateDraggablePoints = (points: typeof draggablePointsStore.points) => {
     const boxBorder = graphDimensionsStore.walls;
 
@@ -57,8 +58,8 @@ import GraphText from '../GraphText.vue';
   ></path>
   <GraphText
     :position="startXAxis"
-    :alignX="startXAxis.x > 0 ? 'right' : 'left'"
-    :alignY="startXAxis.y > 0 ? 'top' : 'bottom'"
+    :alignX="startXAxis.x < 0 ? 'right' : 'left'"
+    :alignY="startXAxis.y < 0 ? 'top' : 'bottom'"
     text="-x"
   />
   <GraphText

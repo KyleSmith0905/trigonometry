@@ -5,6 +5,7 @@
   import { radiansToDegrees, roundNumbers } from '@/helpers/math';
   import { useFunctionsSettings } from '@/stores/functionsSettings';
   import { useGraphDimensions } from '@/stores/graphDimensions';
+  import GraphText from '../GraphText.vue';
 
   const draggablePointsStore = useDraggablePoints();
   const functionsSettingsStore = useFunctionsSettings();
@@ -65,16 +66,14 @@
 <template>
   <path
     :d="`M${mapToGraph(cotangentPointTop)} L${mapToGraph(cotangentPointAxis)}`"
-    class="stroke-green-400 fill-transparent opacity-50 stroke-2"
+    class="stroke-purple-400 fill-transparent opacity-50 stroke-2"
     stroke-linecap='square'
   ></path>
-  <text
-    :x="mapToGraph(textPosition, 'x')"
-    :y="mapToGraph(textPosition, 'y')"
-    :dy="textPosition.y > 0 ? -20 : 20"
-    :dominant-baseline="draggablePointsStore.points.angle.y > 0 ? 'text-top' : 'hanging'"
-    text-anchor="middle"
-    stroke-linecap='square'
-    class="graph-text fill-green-400"
-  >{{ cotangentEquation }}</text>
+  <GraphText
+    :position="textPosition"
+    :alignX="textPosition.x <= 0 ? 'left' : 'right'"
+    :alignY="textPosition.y <= 0 ? 'top' : 'bottom'"
+    :text="cotangentEquation"
+    color="#c084fc"
+  />
 </template>
