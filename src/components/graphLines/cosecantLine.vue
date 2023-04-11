@@ -29,8 +29,8 @@
 
     // Calculate a good position to show text
     textPosition.value = {
-      x: cotangentPointAngle.value.x * 0.5  + draggablePointsStore.points.main.x * 0.5,
-      y: cotangentPointAngle.value.y * 0.5  + draggablePointsStore.points.main.y * 0.5,
+      x: cotangentPointAngle.value.x * 0.5  + points.main.x * 0.5,
+      y: cotangentPointAngle.value.y * 0.5  + points.main.y * 0.5,
     }
 
     // Writes the equation into 
