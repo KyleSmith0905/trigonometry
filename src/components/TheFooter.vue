@@ -10,7 +10,8 @@
       <div class="h-4"></div>
       <div class="grid grid-cols-2 text-center">
         <div>
-          <a target="_blank" href="https://discord.gg/dJKUYq5qEn">Support And Feedback</a>
+          <router-link to="/contact">Contact Us</router-link>
+          <a target="_blank" href="https://discord.gg/dJKUYq5qEn">Community Discord</a>
         </div>
         <div>
           <router-link to="/privacy">Privacy Policy</router-link>

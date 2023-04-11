@@ -1,11 +1,11 @@
 <script setup lang="ts">
-  import { useDraggablePoints } from '@/stores/draggablePoints';
+  import { useDraggablePoints, type Points } from '@/stores/draggablePoints';
   import { mapToGraph, pointsAngle, pointsDistance, pointsToSlope, rayTraceToWall } from '@/helpers/graph';
   import { ref } from 'vue';
-  import { radiansToDegrees, roundNumbers } from '@/helpers/math';
   import { useFunctionsSettings } from '@/stores/functionsSettings';
   import { useGraphDimensions } from '@/stores/graphDimensions';
   import GraphText from '../GraphText.vue';
+  import { writeEquation } from '@/helpers/string';
 
   const draggablePointsStore = useDraggablePoints();
   const functionsSettingsStore = useFunctionsSettings();
@@ -16,10 +16,10 @@
   const textPosition = ref({x: 0, y: 0})
   const cotangentEquation = ref('');
 
-  const updateDraggablePoints = (newStore: typeof draggablePointsStore) => {
-    const points = newStore.points;
-    const cotangentPoint = newStore.cotangentPoint;
-    const angle = newStore.angle;
+  const updateDraggablePoints = (points: Points) => {
+    const yRightAnglePoint = draggablePointsStore.calculateYRightAnglePoint(points);
+    const cotangentPoint = draggablePointsStore.calculateCotangentPoint(points, yRightAnglePoint);
+    const angle = draggablePointsStore.calculateAngle(points);
 
     const angleAngle = pointsAngle(points.main, points.angle);
 
@@ -48,19 +48,14 @@
       y: cotangentPointTop.value.y * 0.5  + cotangentPointAxis.value.y * 0.5,
     }
 
-    // Writes the equation into 
-    const equation = `cotangent(${roundNumbers(radiansToDegrees(angle))}°)`;
-    const answer = `${roundNumbers(1 / Math.tan(angle), 1)}`;
-    if (functionsSettingsStore.cotangent.equation === 'answer') cotangentEquation.value = answer;
-    if (functionsSettingsStore.cotangent.equation === 'equation') cotangentEquation.value = equation;
-    if (functionsSettingsStore.cotangent.equation === 'full') cotangentEquation.value = [equation, answer].join(' = ');
+    cotangentEquation.value = writeEquation(functionsSettingsStore.cotangent, (angle) => 1 / Math.tan(angle))
   }
   setTimeout(() => {
-    updateDraggablePoints(draggablePointsStore);
+    updateDraggablePoints(draggablePointsStore.points);
   });
-  draggablePointsStore.$onAction((pointsData) => updateDraggablePoints(pointsData.store));
-  functionsSettingsStore.$onAction(() => setTimeout(() => updateDraggablePoints(draggablePointsStore)));
-  graphDimensionsStore.$subscribe(() => updateDraggablePoints(draggablePointsStore));
+  draggablePointsStore.$subscribe((_, pointsData) => updateDraggablePoints(pointsData.points));
+  functionsSettingsStore.$subscribe(() => updateDraggablePoints(draggablePointsStore.points));
+  graphDimensionsStore.$subscribe(() => updateDraggablePoints(draggablePointsStore.points));
 </script>
 
 <template>

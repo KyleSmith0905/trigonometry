@@ -3,8 +3,9 @@ import { defineStore } from 'pinia';
 import { Preferences } from '@capacitor/preferences';
 
 export interface FunctionData {
-  active: boolean;
   name: string;
+  id: string;
+  active: boolean;
   equation: 'full' | 'answer' | 'equation';
 }
 
@@ -15,7 +16,6 @@ export type FunctionEquations = FunctionData['equation'];
 export const useFunctionsSettings = defineStore('functionsSettings', () => {
   // Hydrate settings based off of storage
   Preferences.get({key: 'functionsSettings'}).then((settingsString) => {
-    console.log(settingsString);
     if (!settingsString.value) return;
     const settings: Record<FunctionNames, Partial<FunctionData>> = JSON.parse(settingsString.value);
 
@@ -26,13 +26,19 @@ export const useFunctionsSettings = defineStore('functionsSettings', () => {
     if (settings.cosecant) cosecant.value = {...cosecant.value, ...settings.cosecant};
     if (settings.cotangent) cotangent.value = {...cotangent.value, ...settings.cotangent};
   });
+  Preferences.get({key: 'includeScale'}).then((settingsString) => {
+    if (!includeScale.value) return;
+    includeScale.value = settingsString.value === 'true';
+  });
 
-  const sine = ref<FunctionData>({active: true, equation: 'full', name: 'Sine'});
-  const secant = ref<FunctionData>({active: false, equation: 'full', name: 'Secant'});
-  const tangent = ref<FunctionData>({active: true, equation: 'full', name: 'Tangent'});
-  const cosine = ref<FunctionData>({active: true, equation: 'full', name: 'Cosine'});
-  const cosecant = ref<FunctionData>({active: false, equation: 'full', name: 'Cosecant'});
-  const cotangent = ref<FunctionData>({active: false, equation: 'full', name: 'Cotangent'});
+  const sine = ref<FunctionData>({active: true, equation: 'full', name: 'Sine', id: 'sine'});
+  const secant = ref<FunctionData>({active: false, equation: 'full', name: 'Secant', id: 'secant'});
+  const tangent = ref<FunctionData>({active: true, equation: 'full', name: 'Tangent', id: 'tangent'});
+  const cosine = ref<FunctionData>({active: true, equation: 'full', name: 'Cosine', id: 'cosine'});
+  const cosecant = ref<FunctionData>({active: false, equation: 'full', name: 'Cosecant', id: 'cosecant'});
+  const cotangent = ref<FunctionData>({active: false, equation: 'full', name: 'Cotangent', id: 'cotangent'});
+
+  const includeScale = ref(true);
 
   const functionsMap = computed(() => {
     return {sine, secant, tangent, cosine, cosecant, cotangent};
@@ -59,6 +65,23 @@ export const useFunctionsSettings = defineStore('functionsSettings', () => {
     };
     Preferences.set({key: 'functionsSettings', value: JSON.stringify(savedSettings)})
   }
+  
+  const toggleIncludeScale = () => {
+    includeScale.value = !includeScale.value;
+    Preferences.set({key: 'includeScale', value: includeScale.value ? 'true' : 'false'});
+  }
 
-  return {sine, secant, tangent, cosine, cosecant, cotangent, toggleFunctionActive, changeFunctionEquation, saveCurrentSettings, functionsMap}
+  return {
+    sine,
+    secant,
+    tangent,
+    cosine,
+    cosecant,
+    cotangent,
+    includeScale, toggleIncludeScale,
+    functionsMap,
+    toggleFunctionActive,
+    changeFunctionEquation,
+    saveCurrentSettings,
+  }
 })

@@ -12,6 +12,7 @@
     emits('toggle', props.value)
   }
 </script>
+
 <template>
   <button
     @click="toggleWrapper()"

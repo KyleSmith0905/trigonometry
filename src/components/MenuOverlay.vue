@@ -20,15 +20,15 @@
     'sm:w-96 w-screen': settingsMenuStore.active
   }">
     <div class="relative sm:w-96 w-screen px-2 grid grid-cols-1 divide-y divide-slate-300 transition-all">
+      <button
+        @click="settingsMenuStore.toggleActive()"
+        class="absolute text-4xl top-2 right-2 rounded-full text-slate-800 hover:bg-slate-300 transition-colors"
+      >
+        <ion-icon class="block" name="close-circle-outline"></ion-icon>
+      </button>
       <div class="p-2">
         <h1 class="my-2 text-lg font-bold text-slate-900">Trigonometric Functions</h1>
         <div class="flex gap-2 flex-col">
-          <button
-            @click="settingsMenuStore.toggleActive()"
-            class="absolute text-4xl top-2 right-2 rounded-full text-slate-800 hover:bg-slate-300 transition-colors"
-          >
-            <ion-icon class="block" name="close-circle-outline"></ion-icon>
-          </button>
           <h2 class="my-1 text-lg font-bold text-center text-slate-600">Select Trigonometric Function</h2>
           <SelectButton
             @change="activeTrigonometricFunction = ($event as FunctionNames)"
@@ -46,6 +46,20 @@
             :options="[{label: 'Full', value: 'full'}, {label: 'Equation Only', value: 'equation'}, {label: 'Answer Only', value: 'answer'}]"
             :value="activeTrigonometricFunctionSettings.equation"
           />
+        </div>
+        <h1 class="mt-8 mb-2 text-lg font-bold text-slate-900">Graph Settings</h1>
+        <div class="flex gap-2 flex-col">
+          <ToggleButton
+            @toggle="functionsSettingsStore.toggleIncludeScale()"
+            :value="functionsSettingsStore.includeScale"
+            text="Include Scale"
+          />
+        </div>
+        <h1 class="mt-8 mb-2 text-lg font-bold text-slate-900">Community And Support</h1>
+        <div class="flex">
+          <a class="p-2 rounded-md bg-opacity-0 hover:bg-opacity-100 bg-slate-300 transition-colors" href='https://discord.gg/dJKUYq5qEn'>
+            <ion-icon class="block text-slate-800 text-4xl" name="logo-discord"></ion-icon>
+          </a>
         </div>
       </div>
     </div>

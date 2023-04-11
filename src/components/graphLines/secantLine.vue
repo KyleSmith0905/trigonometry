@@ -1,11 +1,11 @@
 <script setup lang="ts">
-  import { useDraggablePoints } from '@/stores/draggablePoints';
+  import { useDraggablePoints, type Points } from '@/stores/draggablePoints';
   import { mapToGraph, pointsDistance, pointsToSlope, rayTraceToWall } from '@/helpers/graph';
   import { ref } from 'vue';
-  import { radiansToDegrees, roundNumbers } from '@/helpers/math';
   import { useFunctionsSettings } from '@/stores/functionsSettings';
   import { useGraphDimensions } from '@/stores/graphDimensions';
   import GraphText from '../GraphText.vue';
+  import { writeEquation } from '@/helpers/string';
 
   const draggablePointsStore = useDraggablePoints();
   const functionsSettingsStore = useFunctionsSettings();
@@ -15,10 +15,9 @@
   const textPosition = ref({x: 0, y: 0})
   const secantEquation = ref('');
 
-  const updateDraggablePoints = (newStore: typeof draggablePointsStore) => {
-    const points = newStore.points;
-    const tangentPoint = newStore.tangentPoint;
-    const angle = newStore.angle;
+  const updateDraggablePoints = (points: Points) => {
+    const xRightAnglePoint = draggablePointsStore.calculateXRightAnglePoint(points);
+    const tangentPoint = draggablePointsStore.calculateTangentPoint(points, xRightAnglePoint);
 
     // Bounds the line connecting the tangent and the angle point.
     const angleSlopeData = pointsToSlope(tangentPoint, points.main);
@@ -29,23 +28,18 @@
 
     // Calculate a good position to show text
     textPosition.value = {
-      x: tangentPointAngle.value.x * 0.5  + draggablePointsStore.points.main.x * 0.5,
-      y: tangentPointAngle.value.y * 0.5  + draggablePointsStore.points.main.y * 0.5,
+      x: tangentPointAngle.value.x * 0.5  + points.main.x * 0.5,
+      y: tangentPointAngle.value.y * 0.5  + points.main.y * 0.5,
     }
 
-    // Writes the equation into 
-    const equation = `secant(${roundNumbers(radiansToDegrees(angle))}°)`;
-    const answer = `${roundNumbers(1 / Math.cos(angle), 1)}`;
-    if (functionsSettingsStore.secant.equation === 'answer') secantEquation.value = answer;
-    if (functionsSettingsStore.secant.equation === 'equation') secantEquation.value = equation;
-    if (functionsSettingsStore.secant.equation === 'full') secantEquation.value = [equation, answer].join(' = ');
+    secantEquation.value = writeEquation(functionsSettingsStore.secant, (angle) => 1 / Math.cos(angle))
   }
   setTimeout(() => {
-    updateDraggablePoints(draggablePointsStore);
+    updateDraggablePoints(draggablePointsStore.points);
   });
-  draggablePointsStore.$onAction((pointsData) => updateDraggablePoints(pointsData.store));
-  functionsSettingsStore.$onAction(() => setTimeout(() => updateDraggablePoints(draggablePointsStore)));
-  graphDimensionsStore.$subscribe(() => updateDraggablePoints(draggablePointsStore));
+  draggablePointsStore.$subscribe((_, pointsData) => updateDraggablePoints(pointsData.points));
+  functionsSettingsStore.$subscribe(() => updateDraggablePoints(draggablePointsStore.points));
+  graphDimensionsStore.$subscribe(() => updateDraggablePoints(draggablePointsStore.points));
 </script>
 
 <template>

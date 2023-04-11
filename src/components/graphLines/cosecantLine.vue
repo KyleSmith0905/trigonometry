@@ -1,11 +1,11 @@
 <script setup lang="ts">
-  import { useDraggablePoints } from '@/stores/draggablePoints';
+  import { useDraggablePoints, type Points } from '@/stores/draggablePoints';
   import { useFunctionsSettings } from '@/stores/functionsSettings';
   import { mapToGraph, pointsDistance, pointsToSlope, rayTraceToWall } from '@/helpers/graph';
   import { ref } from 'vue';
-  import { radiansToDegrees, roundNumbers } from '@/helpers/math';
   import { useGraphDimensions } from '@/stores/graphDimensions';
   import GraphText from '../GraphText.vue';
+  import { writeEquation } from '@/helpers/string';
 
   const draggablePointsStore = useDraggablePoints();
   const functionsSettingsStore = useFunctionsSettings();
@@ -15,10 +15,9 @@
   const textPosition = ref({x: 0, y: 0})
   const cosecantEquation = ref('');
 
-  const updateDraggablePoints = (newStore: typeof draggablePointsStore) => {
-    const points = newStore.points;
-    const cotangentPoint = newStore.cotangentPoint;
-    const angle = newStore.angle;
+  const updateDraggablePoints = (points: Points) => {
+    const yRightAnglePoint = draggablePointsStore.calculateYRightAnglePoint(points);
+    const cotangentPoint = draggablePointsStore.calculateCotangentPoint(points, yRightAnglePoint);
 
     // Bounds the line connecting the tangent and the angle point.
     const angleSlopeData = pointsToSlope(cotangentPoint, points.main);
@@ -33,19 +32,14 @@
       y: cotangentPointAngle.value.y * 0.5  + points.main.y * 0.5,
     }
 
-    // Writes the equation into 
-    const equation = `cosecant(${roundNumbers(radiansToDegrees(angle))}°)`;
-    const answer = `${roundNumbers(1 / Math.sin(angle), 1)}`;
-    if (functionsSettingsStore.cosecant.equation === 'answer') cosecantEquation.value = answer;
-    if (functionsSettingsStore.cosecant.equation === 'equation') cosecantEquation.value = equation;
-    if (functionsSettingsStore.cosecant.equation === 'full') cosecantEquation.value = [equation, answer].join(' = ');
+    cosecantEquation.value = writeEquation(functionsSettingsStore.cosecant, (angle) => 1 / Math.sin(angle))
   }
   setTimeout(() => {
-    updateDraggablePoints(draggablePointsStore);
+    updateDraggablePoints(draggablePointsStore.points);
   });
-  draggablePointsStore.$onAction((pointsData) => updateDraggablePoints(pointsData.store));
-  functionsSettingsStore.$onAction(() => setTimeout(() => updateDraggablePoints(draggablePointsStore)));
-  graphDimensionsStore.$subscribe(() => updateDraggablePoints(draggablePointsStore));
+  draggablePointsStore.$subscribe((_, pointsData) => updateDraggablePoints(pointsData.points));
+  functionsSettingsStore.$subscribe(() => updateDraggablePoints(draggablePointsStore.points));
+  graphDimensionsStore.$subscribe(() => updateDraggablePoints(draggablePointsStore.points));
 </script>
 
 <template>
