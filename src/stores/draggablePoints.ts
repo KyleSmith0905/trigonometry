@@ -18,7 +18,7 @@ export const useDraggablePoints = defineStore('draggablePoints', () => {
     const xAxisAngle = pointsAngle(newPoints.main, newPoints.axis);
     const intersection = pointIntersectionOnAxis(newPoints.main, xAxisAngle, newPoints.angle);
     
-    if (!intersection) return {x: 0, y: 0};
+    if (!intersection) return newPoints.main;
     return intersection
   }
   const xRightAnglePoint = computed(() => calculateXRightAnglePoint(points.value))
@@ -28,7 +28,7 @@ export const useDraggablePoints = defineStore('draggablePoints', () => {
     const xAxisAngle = pointsAngle(newPoints.main, newPoints.axis) + Math.PI * 0.5;
     const intersection = pointIntersectionOnAxis(newPoints.main, xAxisAngle, newPoints.angle);
     
-    if (!intersection) return {x: 0, y: 0};
+    if (!intersection) return newPoints.main;
     return intersection
   }
   const yRightAnglePoint = computed(() => calculateYRightAnglePoint(points.value))

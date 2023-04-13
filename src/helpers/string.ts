@@ -24,9 +24,10 @@ const writeEquation = (functionData: FunctionData, conversion: (angle: number) =
   const stringifiedAnswer = `${roundNumbers(answer, 1)}`;
   
   let value = ''
-  if (functionData.equation === 'answer') value = stringifiedAnswer;
-  if (functionData.equation === 'equation') value = equation;
-  if (functionData.equation === 'full') value = [equation, stringifiedAnswer].join(' = ');
+  if (functionData.equation === 'none') value = '';
+  else if (functionData.equation === 'answer') value = stringifiedAnswer;
+  else if (functionData.equation === 'equation') value = equation;
+  else if (functionData.equation === 'full') value = [equation, stringifiedAnswer].join(' = ');
 
   return value;
 }

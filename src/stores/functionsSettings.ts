@@ -6,7 +6,7 @@ export interface FunctionData {
   name: string;
   id: string;
   active: boolean;
-  equation: 'full' | 'answer' | 'equation';
+  equation: 'full' | 'answer' | 'equation' | 'none';
 }
 
 export type FunctionNames = 'sine' | 'secant' | 'tangent' | 'cosine' | 'cosecant' | 'cotangent';

@@ -16,6 +16,8 @@
   const updateDraggablePoints = (points: Points) => {
     const xRightAnglePoint = draggablePointsStore.calculateXRightAnglePoint(points);
 
+    console.log(xRightAnglePoint);
+
     // Calculate a good position to show text
     axisPointNew.value = xRightAnglePoint;
     textPosition.value = {
@@ -23,13 +25,15 @@
       y: xRightAnglePoint.y * 0.5  + points.angle.y * 0.5,
     }
 
-    sineEquation.value = writeEquation(functionsSettingsStore.sine, (angle) => Math.sin(angle))
+    sineEquation.value = writeEquation(functionsSettingsStore.sine, (angle) => Math.sin(angle));
+    console.log(draggablePointsStore.points.angle.y, axisPointNew.value.y);
   }
   setTimeout(() => {
     updateDraggablePoints(draggablePointsStore.points);
   });
   draggablePointsStore.$subscribe((_, pointsData) => updateDraggablePoints(pointsData.points));
   functionsSettingsStore.$subscribe(() => updateDraggablePoints(draggablePointsStore.points));
+
 </script>
 
 <template>

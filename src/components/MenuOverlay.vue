@@ -43,7 +43,7 @@
           />
           <SelectButton
             @change="functionsSettingsStore.changeFunctionEquation(activeTrigonometricFunction, $event as FunctionEquations)"
-            :options="[{label: 'Full', value: 'full'}, {label: 'Equation Only', value: 'equation'}, {label: 'Answer Only', value: 'answer'}]"
+            :options="[{label: 'Full', value: 'full'}, {label: 'Equation Only', value: 'equation'}, {label: 'Answer Only', value: 'answer'}, {label: 'None', value: 'none'}]"
             :value="activeTrigonometricFunctionSettings.equation"
           />
         </div>
