@@ -6,7 +6,7 @@
     "dev": "vite --host",
     "dev:android": "cap sync android && cap open android && npm run dev",
     "build": "run-p type-check build-only",
-    "build:android": "npm run build && npx cap sync android && npx cap open android",
+    "build:android": "npm run build && cap sync android && cap open android",
     "assets": "npx @capacitor/assets generate --iconBackgroundColor #f1f5f9 --iconBackgroundColorDark #0f172a --splashBackgroundColor #f1f5f9 --splashBackgroundColorDark #0f172a --android --ios",
     "assets:android": "npx @capacitor/assets generate --iconBackgroundColor #f1f5f9 --iconBackgroundColorDark #0f172a --splashBackgroundColor #f1f5f9 --splashBackgroundColorDark #0f172a --android",
     "preview": "vite preview",
@@ -33,6 +33,7 @@
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
     "@types/node": "^18.14.2",
+    "@vitejs/plugin-legacy": "^4.0.2",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue/eslint-config-prettier": "^7.1.0",
     "@vue/eslint-config-typescript": "^11.0.2",

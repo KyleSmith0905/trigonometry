@@ -140,7 +140,7 @@
 
 <template>
   <div class="absoluter top-0 w-full h-full overflow-hidden">
-    <template v-for="(value, pointName) in draggablePointsStore.points">
+    <template v-for="(value, pointName) in draggablePointsStore.boundedPoints">
       <div
         v-if="pointsLocal[pointName].visible"
         @touchstart="dragStart($event, pointName)"

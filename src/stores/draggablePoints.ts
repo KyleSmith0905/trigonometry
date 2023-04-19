@@ -12,6 +12,21 @@ export const useDraggablePoints = defineStore('draggablePoints', () => {
   const graphDimensionsStore = useGraphDimensions();
 
   const points = ref({main: {x: 0, y: 0}, axis: {x: 3, y: 0}, angle: {x: 3, y: 4}});
+  
+  const calculateBoundPoints = (newPoint: {x: number; y: number}) => {
+    const boundingBox = graphDimensionsStore.boundingBox;
+    return {
+      x: clamp(newPoint.x, boundingBox.left + 0.1, boundingBox.right - 0.1),
+      y: clamp(newPoint.y, boundingBox.top + 0.1, boundingBox.bottom - 0.1),
+    }
+  }
+  const boundedPoints = computed(() => {
+    return {
+      main: calculateBoundPoints(points.value.main),
+      axis: calculateBoundPoints(points.value.axis),
+      angle: calculateBoundPoints(points.value.angle),
+    }
+  })
 
   // Gets the position of the right angle on the triangle
   const calculateXRightAnglePoint = (newPoints: typeof points.value) => {
@@ -81,11 +96,7 @@ export const useDraggablePoints = defineStore('draggablePoints', () => {
 
   // Sets the point and clamps it between bounds
   const setPoint = (pointName: PointNames, pointData: {x: number, y: number}) => {
-    const boundingBox = graphDimensionsStore.boundingBox;
-    points.value[pointName] = {
-      x: clamp(pointData.x, boundingBox.left + 0.1, boundingBox.right - 0.1),
-      y: clamp(pointData.y, boundingBox.top + 0.1, boundingBox.bottom - 0.1),
-    }
+    points.value[pointName] = pointData;
   }
 
   return {
@@ -96,5 +107,6 @@ export const useDraggablePoints = defineStore('draggablePoints', () => {
     cotangentPoint, calculateCotangentPoint,
     angle, calculateAngle,
     unitScale, calculateUnitScale,
+    boundedPoints, calculateBoundPoints,
   }
 })

@@ -1,9 +1,10 @@
 <script setup lang="ts">
   import { mapToGraph, rectanglesIntersect } from '@/helpers/graph';
-import { xor } from '@/helpers/logic';
-import { sleep } from '@/helpers/time';
+  import { xor } from '@/helpers/logic';
+  import { sleep } from '@/helpers/time';
   import { useGraphDimensions } from '@/stores/graphDimensions';
   import { useGraphText } from '@/stores/graphText';
+import { useSettingsMenu } from '@/stores/settingsMenu';
   import { getCurrentInstance, ref, watch } from 'vue';
 
   const textRef = ref<SVGTextElement | null>(null);
@@ -16,6 +17,7 @@ import { sleep } from '@/helpers/time';
   const graphDimensionsStore = useGraphDimensions();
   const graphTextStore = useGraphText();
   const instance = getCurrentInstance();
+  const settingsMenuStore = useSettingsMenu();
 
   const props = defineProps<{
     position: {x: number, y: number},
@@ -25,16 +27,16 @@ import { sleep } from '@/helpers/time';
     color?: string,
   }>();
 
-  const textUpdated = async () => {
+  const textUpdated = async (forceUpdate = false) => {
     // Save boundingClientRect calls so it doesn't need to be sent every frame.
-    if (!startAlign.value) {
-      // If alignment hasn't really changed, don't update the new text position.
+    if (!startAlign.value || forceUpdate) {
+      // If alignment hasn't changed yet, don't update the new text position yet.
       if (
         xor(simulationRef.value?.getAttribute('text-anchor') === 'start', props.alignX === 'left') ||
         xor(simulationRef.value?.getAttribute('dominant-baseline') === 'hanging', props.alignY === 'top')
       ) {
         await sleep();
-        textUpdated();
+        textUpdated(forceUpdate);
         return;
       };
 
@@ -62,7 +64,7 @@ import { sleep } from '@/helpers/time';
       startAlign.value = {x: props.alignX, y: props.alignY};
     }
     // Declares that the alignment will be changed next iteration
-    if (startAlign.value.x !== props.alignX || startAlign.value.y !== props.alignY) {
+    if (startAlign.value && (startAlign.value.x !== props.alignX || startAlign.value.y !== props.alignY)) {
       startAlign.value = undefined;
     }
     if (!startTextBounds.value) return;
@@ -94,10 +96,10 @@ import { sleep } from '@/helpers/time';
       adjustedPosition.value.x -= textBounds.right - bounds.right + 1.5;
     };
     if (textBounds.top < bounds.top + 1.5) {
-      adjustedPosition.value.y += textBounds.top - bounds.top - 1.5;
+      adjustedPosition.value.y -= textBounds.top - bounds.top - 1.5;
     };
     if (textBounds.bottom > bounds.bottom - 1.5) {
-      adjustedPosition.value.y += textBounds.bottom - bounds.bottom + 1.5;
+      adjustedPosition.value.y -= textBounds.bottom - bounds.bottom + 1.5;
     };
 
     // Ensure already checked elements are not rechecking
@@ -114,6 +116,15 @@ import { sleep } from '@/helpers/time';
       top: textBounds.top - props.position.y + adjustedPosition.value.y,
       bottom: textBounds.top - startSize.value.height - props.position.y + adjustedPosition.value.y,
     };
+
+    const isOutOfBounds = (newTextBounds: typeof adjustedTextBounds) => {
+      return (
+        newTextBounds.left < bounds.left + 1.5 ||
+        newTextBounds.right > bounds.right - 1.5 ||
+        newTextBounds.top < bounds.top + 1.5 ||
+        newTextBounds.bottom > bounds.bottom - 1.5
+      );
+    }
 
     // Offsets the element slightly and check if the position is available.
     const attemptFindPosition = (multiply = 0.6, inverse = false) => {
@@ -134,8 +145,9 @@ import { sleep } from '@/helpers/time';
         if (!compareBounds) return true;
 
         const doesIntersect = rectanglesIntersect(tempAdjustedTextBounds, compareBounds);
+        const doesOutOfBounds = isOutOfBounds(tempAdjustedTextBounds);
         
-        if (doesIntersect) return false;
+        if (doesIntersect || doesOutOfBounds) return false;
         else return true;
       });
       
@@ -162,10 +174,13 @@ import { sleep } from '@/helpers/time';
 
   watch([props], () => textUpdated());
   setTimeout(() => textUpdated());
+  // Performs a final sweep to update everything properly after the menu is closed
+  settingsMenuStore.$subscribe(() => setTimeout(() => textUpdated(true), 200));
 </script>
 
 <template>
   <text
+    v-if="text"
     :x="mapToGraph(position, 'x')"
     :y="mapToGraph(position, 'y')"
     :dx="alignX === 'left' ? 20 : -20"
@@ -178,6 +193,7 @@ import { sleep } from '@/helpers/time';
     {{ text }}
   </text>
   <text
+    v-if="text"
     :x="mapToGraph(adjustedPosition, 'x')"
     :y="mapToGraph(adjustedPosition, 'y')"
     :dx="(alignX === 'left' ? 20 : -20)"

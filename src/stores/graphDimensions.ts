@@ -14,11 +14,24 @@ export const useGraphDimensions = defineStore('graphDimensions', () => {
     };
   })
 
+  // I'm modifying it a little so the walls extend outwards in case a slope starts from outside the graph
   const walls = computed(() => {
-    return convertBoxToWalls(boundingBox.value);
+    const walls = convertBoxToWalls(boundingBox.value);
+    walls[0].from.x *= 2;
+    walls[0].to.x *= 2;
+    walls[1].from.y *= 2;
+    walls[1].to.y *= 2;
+    walls[2].from.x *= 2;
+    walls[2].to.x *= 2;
+    walls[3].from.y *= 2;
+    walls[3].to.y *= 2;
+
+    return walls
   })
 
   const updateDimensions = ({width, height, left, top, right, bottom}: DOMRectReadOnly) => {
+    // Glitches arrive when width or height is 0. Usually when the settings menu is open.
+    if (width < 0.1 || height < 0.1) return;
     dimensions.value = {
       width: width,
       height: height,

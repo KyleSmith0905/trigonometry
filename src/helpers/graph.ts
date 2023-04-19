@@ -40,6 +40,9 @@ const invertSlopeOnPoint = ({slope, direction}: {slope: number, yIntercept: numb
   return {slope: inverseSlope, yIntercept: inverseYIntercept, direction: inverseDirection};
 }
 
+/**
+ * Converts a box to an array of walls. The walls are organized by top -> right -> bottom -> left.
+ */
 const convertBoxToWalls = (
   {top, right, bottom, left}: {top: number, right: number, bottom: number, left: number},
 ): {from: {x: number, y: number}, to: {x: number, y: number}}[] => {
