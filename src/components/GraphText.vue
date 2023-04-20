@@ -4,7 +4,7 @@
   import { sleep } from '@/helpers/time';
   import { useGraphDimensions } from '@/stores/graphDimensions';
   import { useGraphText } from '@/stores/graphText';
-import { useSettingsMenu } from '@/stores/settingsMenu';
+  import { useSettingsMenu } from '@/stores/settingsMenu';
   import { getCurrentInstance, ref, watch } from 'vue';
 
   const textRef = ref<SVGTextElement | null>(null);
@@ -58,8 +58,8 @@ import { useSettingsMenu } from '@/stores/settingsMenu';
         height: textBoundingClient.height / 25,
       }
       startPosition.value = {
-        x: (parseFloat(simulationRef.value?.getAttribute('x') ?? '0') - (dimensions.width * 0.5)) / 25,
-        y: (parseFloat(simulationRef.value?.getAttribute('y') ?? '0') - (dimensions.height * 0.5)) / -25,
+        x: (parseFloat(simulationRef.value?.getAttribute('x') ?? '0') - (dimensions.width * 0.5) + dimensions.left) / 25,
+        y: (parseFloat(simulationRef.value?.getAttribute('y') ?? '0') - (dimensions.height * 0.5) + dimensions.top) / -25,
       };
       startAlign.value = {x: props.alignX, y: props.alignY};
     }
@@ -88,7 +88,7 @@ import { useSettingsMenu } from '@/stores/settingsMenu';
       x: props.position.x,
       y: props.position.y,
     }
-
+    
     if (textBounds.left < bounds.left + 1.5) {
       adjustedPosition.value.x -= textBounds.left - bounds.left - 1.5;
     };
@@ -119,10 +119,10 @@ import { useSettingsMenu } from '@/stores/settingsMenu';
 
     const isOutOfBounds = (newTextBounds: typeof adjustedTextBounds) => {
       return (
-        newTextBounds.left < bounds.left + 1.5 ||
-        newTextBounds.right > bounds.right - 1.5 ||
-        newTextBounds.top < bounds.top + 1.5 ||
-        newTextBounds.bottom > bounds.bottom - 1.5
+        newTextBounds.left < bounds.left ||
+        newTextBounds.right > bounds.right ||
+        newTextBounds.top < bounds.top ||
+        newTextBounds.bottom > bounds.bottom
       );
     }
 
@@ -144,6 +144,7 @@ import { useSettingsMenu } from '@/stores/settingsMenu';
         const compareBounds = graphTextStore.getTextBounds(compareElement);
         if (!compareBounds) return true;
 
+        
         const doesIntersect = rectanglesIntersect(tempAdjustedTextBounds, compareBounds);
         const doesOutOfBounds = isOutOfBounds(tempAdjustedTextBounds);
         

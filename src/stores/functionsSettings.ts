@@ -3,6 +3,7 @@ import { defineStore } from 'pinia';
 import { Preferences } from '@capacitor/preferences';
 
 export interface FunctionData {
+  locked: boolean;
   name: string;
   id: string;
   active: boolean;
@@ -31,12 +32,12 @@ export const useFunctionsSettings = defineStore('functionsSettings', () => {
     includeScale.value = settingsString.value === 'true';
   });
 
-  const sine = ref<FunctionData>({active: true, equation: 'full', name: 'Sine', id: 'sine'});
-  const secant = ref<FunctionData>({active: false, equation: 'full', name: 'Secant', id: 'secant'});
-  const tangent = ref<FunctionData>({active: true, equation: 'full', name: 'Tangent', id: 'tangent'});
-  const cosine = ref<FunctionData>({active: true, equation: 'full', name: 'Cosine', id: 'cosine'});
-  const cosecant = ref<FunctionData>({active: false, equation: 'full', name: 'Cosecant', id: 'cosecant'});
-  const cotangent = ref<FunctionData>({active: false, equation: 'full', name: 'Cotangent', id: 'cotangent'});
+  const sine = ref<FunctionData>({locked: false, active: true, equation: 'full', name: 'Sine', id: 'sine'});
+  const secant = ref<FunctionData>({locked: true, active: false, equation: 'full', name: 'Secant', id: 'secant'});
+  const tangent = ref<FunctionData>({locked: false, active: true, equation: 'full', name: 'Tangent', id: 'tangent'});
+  const cosine = ref<FunctionData>({locked: false, active: true, equation: 'full', name: 'Cosine', id: 'cosine'});
+  const cosecant = ref<FunctionData>({locked: true, active: false, equation: 'full', name: 'Cosecant', id: 'cosecant'});
+  const cotangent = ref<FunctionData>({locked: true, active: false, equation: 'full', name: 'Cotangent', id: 'cotangent'});
 
   const includeScale = ref(true);
 

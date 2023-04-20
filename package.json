@@ -22,13 +22,16 @@
     "@capacitor/core": "^4.7.1",
     "@capacitor/device": "^4.1.0",
     "@capacitor/preferences": "^4.0.2",
+    "@vue-stripe/vue-stripe": "^4.5.0",
     "@vueuse/core": "^9.13.0",
     "@vueuse/head": "^1.1.23",
+    "firebase": "^9.20.0",
     "ionicons": "^7.1.0",
     "pinia": "^2.0.32",
     "vue": "^3.2.47",
     "vue-meta": "^2.4.0",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "vuefire": "^3.1.0"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",

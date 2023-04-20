@@ -32,7 +32,7 @@
           <h2 class="my-1 text-lg font-bold text-center text-slate-600">Select Trigonometric Function</h2>
           <SelectButton
             @change="activeTrigonometricFunction = ($event as FunctionNames)"
-            :options="[{label: 'Sine', value: 'sine'}, {label: 'Secant', value: 'secant'}, {label: 'Tangent', value: 'tangent'}, {label: 'Cosine', value: 'cosine'}, {label: 'Cosecant', value: 'cosecant'}, {label: 'Cotangent', value: 'cotangent'}]"
+            :options="Object.values(functionsSettingsStore.functionsMap).map(e => ({label: e.value.name, value: e.value.id, locked: e.value.locked}))"
             :value="activeTrigonometricFunction"
           />
           <h2 class="my-1 text-lg font-bold text-center text-slate-600">Edit {{ activeTrigonometricFunctionSettings.name }}</h2>

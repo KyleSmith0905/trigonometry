@@ -7,12 +7,14 @@
       </p>
       <div class="h-4"></div>
       <div class="grid grid-cols-2 text-center">
-        <div>
+        <div class="flex flex-col items-center">
           <router-link to="/contact">Contact Us</router-link>
           <a target="_blank" href="https://discord.gg/dJKUYq5qEn">Community Discord</a>
         </div>
-        <div>
+        <div class="flex flex-col items-center">
           <router-link to="/privacy">Privacy Policy</router-link>
+          <router-link to="/terms">Terms of Service</router-link>
+          <router-link to="/returns">Return Policy</router-link>
         </div>
       </div>
     </div>
