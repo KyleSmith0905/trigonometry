@@ -1,4 +1,8 @@
 <script setup lang="ts">
+  import { useModalGenerator } from '@/stores/modalGenerator';
+  import { useCurrentUser } from 'vuefire';
+
+  const modalGeneratorStore = useModalGenerator()
 
   const props = defineProps<{
     value: string,
@@ -9,9 +13,17 @@
     (e: 'change', state: string): void
   }>();
 
+  const user = useCurrentUser();
+
   const changeWrapper = (newValue: string) => {
     const optionFull = props.options.find((e) => e.value === newValue);
     if (optionFull?.locked) {
+      if (user.value === null) {
+        modalGeneratorStore.openModal('signing');
+      }
+      else {
+        modalGeneratorStore.openModal('payment');
+      }
       return;
     }
     emits('change', newValue)

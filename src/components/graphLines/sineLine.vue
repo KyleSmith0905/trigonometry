@@ -5,9 +5,11 @@
   import { useFunctionsSettings } from '@/stores/functionsSettings';
   import GraphText from '../GraphText.vue';
   import { writeEquation } from '@/helpers/string';
+  import { useGraphDimensions } from '@/stores/graphDimensions';
 
   const draggablePointsStore = useDraggablePoints();
   const functionsSettingsStore = useFunctionsSettings();
+  const graphDimensionsStore = useGraphDimensions();
 
   const axisPointNew = ref({x: 0, y: 0});
   const textPosition = ref({x: 0, y: 0})
@@ -30,7 +32,7 @@
   });
   draggablePointsStore.$subscribe((_, pointsData) => updateDraggablePoints(pointsData.points));
   functionsSettingsStore.$subscribe(() => updateDraggablePoints(draggablePointsStore.points));
-
+  graphDimensionsStore.$subscribe(() => updateDraggablePoints(draggablePointsStore.points));
 </script>
 
 <template>

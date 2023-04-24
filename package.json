@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "vite --host",
     "dev:android": "cap sync android && cap open android && npm run dev",
+    "dev:stripe": "stripe listen --forward-to http://127.0.0.1:5001/trigonometry-simulator/us-central1/stripeWebhooks",
+    "dev:functions": "cd functions && npm run serve:watch",
     "build": "run-p type-check build-only",
     "build:android": "npm run build && cap sync android && cap open android",
     "assets": "npx @capacitor/assets generate --iconBackgroundColor #f1f5f9 --iconBackgroundColorDark #0f172a --splashBackgroundColor #f1f5f9 --splashBackgroundColorDark #0f172a --android --ios",
@@ -22,7 +24,7 @@
     "@capacitor/core": "^4.7.1",
     "@capacitor/device": "^4.1.0",
     "@capacitor/preferences": "^4.0.2",
-    "@vue-stripe/vue-stripe": "^4.5.0",
+    "@stripe/stripe-js": "^1.52.1",
     "@vueuse/core": "^9.13.0",
     "@vueuse/head": "^1.1.23",
     "firebase": "^9.20.0",
@@ -31,6 +33,8 @@
     "vue": "^3.2.47",
     "vue-meta": "^2.4.0",
     "vue-router": "^4.1.6",
+    "vue-stripe-js": "^1.0.1",
+    "vue3-spinners": "^1.2.2",
     "vuefire": "^3.1.0"
   },
   "devDependencies": {

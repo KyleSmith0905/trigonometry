@@ -16,7 +16,7 @@
 
 <template>
   <div :class="{
-    'h-screen w-0 bg-slate-200 transition-all shadow-2xl z-20 overflow-hidden flex-shrink-0 overflow-y-auto touch-none': true,
+    'h-screen w-0 bg-slate-200 transition-all shadow-2xl shadow-slate-400 z-20 overflow-hidden flex-shrink-0 overflow-y-auto touch-none': true,
     'sm:w-96 w-screen': settingsMenuStore.active
   }">
     <div class="relative sm:w-96 w-screen px-2 grid grid-cols-1 divide-y divide-slate-300 transition-all">

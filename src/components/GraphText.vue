@@ -48,8 +48,8 @@
 
       // Keep data through loops of text updating to make code faster
       startTextBounds.value = {
-        left: (textBoundingClient.left - (dimensions.width * 0.5) - dimensions.left) / 25,
-        right: (textBoundingClient.right - (dimensions.width * 0.5) - dimensions.left) / 25,
+        left: (textBoundingClient.left - (dimensions.width * 0.5)) / 25,
+        right: (textBoundingClient.right - (dimensions.width * 0.5)) / 25,
         top: (textBoundingClient.top - (dimensions.height * 0.5)) / 25,
         bottom: (textBoundingClient.bottom - (dimensions.height * 0.5)) / 25,
       }
@@ -143,7 +143,8 @@
       const isValidLocation = textElement.every((compareElement) => {
         const compareBounds = graphTextStore.getTextBounds(compareElement);
         if (!compareBounds) return true;
-
+        // Prevent the same element from considering itself
+        if (compareElement.textContent === simulationRef.value?.textContent) return true;
         
         const doesIntersect = rectanglesIntersect(tempAdjustedTextBounds, compareBounds);
         const doesOutOfBounds = isOutOfBounds(tempAdjustedTextBounds);
@@ -207,7 +208,6 @@
     stroke-linecap='square'
     class="graph-text"
     data-element-group="text"
-    data-text-evaluation="false"
   >
     {{ text }}
   </text>
