@@ -7,7 +7,7 @@
 </script>
 
 <template>
-  <BaseModal v-for="modal of modalGeneratorStore.modals" :key="modal.content" :content="modal.content"/>
+  <BaseModal v-for="modal of modalGeneratorStore.modals" :key="modal.id" :content="modal.content" :leaving="modal.leaving"/>
   <RouterView />
 </template>
 

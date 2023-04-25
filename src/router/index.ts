@@ -20,16 +20,6 @@ const router = createRouter({
     {
       path: '/graph',
       name: 'graph',
-      beforeEnter: () => {
-        const isNative = Capacitor.isNativePlatform();
-        // Allow native users to access the app (they have already paid)
-        if (isNative) {
-          return true;
-        }
-        
-
-        return true;
-      },
       component: () => import('../views/GraphView.vue'),
     },
     {

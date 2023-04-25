@@ -11,6 +11,7 @@
   const stripeLoaded = ref(false);
   const error = ref('');
   const paymentDisabled = ref(false);
+  const errorRef = ref<HTMLParagraphElement>();
 
   const user = useCurrentUser();
 
@@ -38,9 +39,17 @@
     paymentElement.value.mount('#stripe-payment')
   })
 
-  const handleError = (stripeError?: StripeError) => {
+  const handleError = (stripeError?: StripeError | string) => {
     paymentDisabled.value = false;
-    error.value = stripeError?.type ?? 'An error occurred.';
+    if (typeof stripeError === 'string') {
+      error.value = stripeError;
+    }
+    else {
+      error.value = stripeError?.message ?? 'An error occurred.';
+    }
+    setTimeout(() => {
+      errorRef.value?.scrollIntoView(false);
+    })
   }
 
   const pay = async () => {
@@ -68,7 +77,7 @@
 
     const paymentIntent = await createPaymentIntentResponse?.json();
     if (!paymentIntent || 'error' in paymentIntent || !('client_secret' in paymentIntent)) {
-      handleError(paymentIntent?.error);
+      handleError(paymentIntent);
       return;
     }
 
@@ -80,10 +89,10 @@
         return_url: `${location.protocol + "//" + location.host}/graph`,
       },
       redirect: 'always',
-    });
+    })
 
-    if (confirmPayment.error) {
-      handleError(submitResponse?.error);
+    if (!confirmPayment || confirmPayment.error) {
+      handleError(confirmPayment.error ?? 'There was an error confirming payment, make sure your card is correct.');
       return;
     }
   };
@@ -92,8 +101,10 @@
 <template>
   <div class="flex flex-col items-center">
     <h1 class="subheader">Premium</h1>
+    <p class="paragraph w-3/4 text-center">Purchase premium for $2.95!</p>
+    <p class="paragraph w-3/4 text-center">Unlock extra trigonometric functions and support the creator.</p>
     <div id="stripe-payment" class="w-11/12 mt-4"></div>
-    <ActionButton v-if="stripeLoaded === true" @click="pay()" :loading="true" text="Pay" class="mt-8 w-32"/>
-    <p class="paragraph mt-3 text-red-600 w-3/4 text-center">{{ error }}</p>
+    <ActionButton v-if="stripeLoaded === true" @click="pay()" :loading="paymentDisabled" text="Pay" class="mt-8 w-32"/>
+    <p ref="errorRef" class="paragraph mt-3 text-red-600 w-3/4 text-center">{{ error }}</p>
   </div>
 </template>

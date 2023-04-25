@@ -32,4 +32,8 @@ const writeEquation = (functionData: FunctionData, conversion: (angle: number) =
   return value;
 }
 
-export { trimTemplateLiterals, writeEquation };
+const randomHex = () => {
+  return Math.floor(Math.random() * 0xffffff).toString(16).padEnd(6, "0");
+}
+
+export { trimTemplateLiterals, writeEquation, randomHex };

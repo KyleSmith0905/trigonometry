@@ -4,14 +4,25 @@
   import { useFunctionsSettings, type FunctionEquations, type FunctionNames } from '@/stores/functionsSettings';
   import SelectButton from './formElements/SelectButton.vue';
   import { computed, ref } from 'vue';
+  import ActionButton from '@/components/formElements/ActionButton.vue'
+  import { useCurrentUser, useFirebaseAuth } from 'vuefire';
 
   const settingsMenuStore = useSettingsMenu();
   const functionsSettingsStore = useFunctionsSettings();
+  const firebaseAuth = useFirebaseAuth();
+  const currentUser = useCurrentUser();
+
   const activeTrigonometricFunction = ref<FunctionNames>('sine');
+  const signingOutLoading = ref(false);
   const activeTrigonometricFunctionSettings = computed(() => {
     return functionsSettingsStore[activeTrigonometricFunction.value]
   });
 
+  const signOut = async () => {
+    signingOutLoading.value = true;
+    await firebaseAuth?.signOut();
+    signingOutLoading.value = false;
+  }
 </script>
 
 <template>
@@ -55,11 +66,16 @@
             text="Include Scale"
           />
         </div>
-        <h1 class="mt-8 mb-2 text-lg font-bold text-slate-900">Community And Support</h1>
-        <div class="flex">
-          <a class="p-2 rounded-md bg-opacity-0 hover:bg-opacity-100 bg-slate-300 transition-colors" href='https://discord.gg/dJKUYq5qEn'>
-            <ion-icon class="block text-slate-800 text-4xl" name="logo-discord"></ion-icon>
-          </a>
+        <h1 class="mt-8 mb-2 text-lg font-bold text-slate-900">Community And Others</h1>
+        <div class="flex gap-2 flex-col">
+          <div class="flex">
+            <a class="p-2 rounded-md bg-opacity-0 hover:bg-opacity-100 bg-slate-300 transition-colors" href='https://discord.gg/dJKUYq5qEn'>
+              <ion-icon class="block text-slate-800 text-4xl" name="logo-discord"></ion-icon>
+            </a>
+          </div>
+          <ActionButton v-if="currentUser?.uid" @click="signOut()" text="Sign Out"/>
+          <ActionButton text="Privacy Policy" to="/privacy"/>
+          <ActionButton text="Terms of Service" to="/terms"/>
         </div>
       </div>
     </div>

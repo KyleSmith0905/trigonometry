@@ -1,6 +1,7 @@
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { defineStore } from 'pinia';
 import { Preferences } from '@capacitor/preferences';
+import { useUserData } from './userData';
 
 export interface FunctionData {
   locked: boolean;
@@ -31,6 +32,21 @@ export const useFunctionsSettings = defineStore('functionsSettings', () => {
     if (!includeScale.value) return;
     includeScale.value = settingsString.value === 'true';
   });
+  
+  const userDataStore = useUserData();
+  watch([userDataStore], ([currentUserDataStore]) => {
+    const hasPremium = currentUserDataStore.isPremium;
+    if (hasPremium) {
+      secant.value.locked = false;
+      cosecant.value.locked = false;
+      cotangent.value.locked = false;
+    }
+    else {
+      secant.value.locked = true;
+      cosecant.value.locked = true;
+      cotangent.value.locked = true;
+    }
+  })
 
   const sine = ref<FunctionData>({locked: false, active: true, equation: 'full', name: 'Sine', id: 'sine'});
   const secant = ref<FunctionData>({locked: true, active: false, equation: 'full', name: 'Secant', id: 'secant'});
