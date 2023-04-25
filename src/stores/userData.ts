@@ -15,6 +15,7 @@ export const useUserData = defineStore('userData', () => {
   if (isNative) isPremium.value = true;
   
   watch([userAuth], async ([currentUser]) => {
+    console.log('start of user data', isNative)
     const userId = currentUser?.uid;
     if (!userId) {
       if (!isNative) {
@@ -25,6 +26,7 @@ export const useUserData = defineStore('userData', () => {
     };
     const document = useDocument(doc(collection(firestore, 'users'), `${userId}`));
     userData.value = document;
+    console.log('after document fetch');
 
     const documentData = await document.promise.value;
     if (!isNative) {

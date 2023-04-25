@@ -40,24 +40,24 @@
         <DraggablePoints/>
       </div>
       <div class="absolute flex items-center justify-center top-0 h-full w-full pointer-events-none">
-        <h2 class="px-3 py-2 rounded-md text-slate-700 font-bold font-mono text-2xl bg-slate-200 bg-opacity-90 backdrop-blur-sm drop-shadow-lg">Trigonometry Simulator</h2>
+        <h2 class="px-3 py-2 rounded-md text-slate-700 font-bold font-mono text-2xl bg-slate-200 bg-opacity-90 backdrop-blur-sm drop-shadow-lg text-center">Trigonometry Simulator</h2>
       </div>
     </div>
     <div class="bg-slate-50 py-4">
-      <div class="flex flex-wrap sm:flex-nowrap gap-6 max-w-4xl w-10/12 mx-auto">
+      <div class="grid grid-col grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl w-10/12 mx-auto">
         <div class="h-fit my-auto">
           <h2 class="text-lg font-bold font-mono text-slate-700">Easy To Use</h2>
           <p class="text-slate-800">Explore the power of trigonometric functions with our easy-to-use interface. See how these functions build the bridge between cartesian coordinates and polar coordinates.</p>
         </div>
-        <div class="flex items-center min-w-fit">
-          <img alt="A minimal simple flat UI" class="rounded-md shadow-md" :width="425" :height="239" src="/images/screenshot-simple.webp"/>
+        <div class="flex justify-center">
+          <img alt="A minimal simple flat UI" class="max-w-xs w-full rounded-md shadow-md" :width="425" :height="239" src="/images/screenshot-simple.webp"/>
         </div>
       </div>
     </div>
     <div class="bg-slate-100 py-4">
-      <div class="flex flex-wrap sm:flex-nowrap gap-6 max-w-4xl w-10/12 mx-auto">
-        <div class="flex items-center min-w-fit">
-          <img alt="A sophisticated UI with a menu allowing unlimited creativity" class="rounded-md shadow-md" :width="470" :height="264" src="/images/screenshot-complex.webp"/>
+      <div class="grid grid-col grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl w-10/12 mx-auto">
+        <div class="flex justify-center">
+          <img alt="A sophisticated UI with a menu allowing unlimited creativity" class="max-w-xs w-full rounded-md shadow-md" :width="470" :height="264" src="/images/screenshot-complex.webp"/>
         </div>
         <div class="h-fit my-auto">
           <h2 class="text-lg font-bold font-mono text-slate-700">Unlimited Customization</h2>

@@ -35,6 +35,7 @@ export const useFunctionsSettings = defineStore('functionsSettings', () => {
   
   const userDataStore = useUserData();
   watch([userDataStore], ([currentUserDataStore]) => {
+    console.log('function settings changed');
     const hasPremium = currentUserDataStore.isPremium;
     if (hasPremium) {
       secant.value.locked = false;
