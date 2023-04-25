@@ -49,14 +49,14 @@
           <h2 class="text-lg font-bold font-mono text-slate-700">Easy To Use</h2>
           <p class="text-slate-800">Explore the power of trigonometric functions with our easy-to-use interface. See how these functions build the bridge between cartesian coordinates and polar coordinates.</p>
         </div>
-        <div class="flex items-center">
+        <div class="flex items-center min-w-fit">
           <img alt="A minimal simple flat UI" class="rounded-md shadow-md" :width="425" :height="239" src="/images/screenshot-simple.webp"/>
         </div>
       </div>
     </div>
     <div class="bg-slate-100 py-4">
       <div class="flex flex-wrap sm:flex-nowrap gap-6 max-w-4xl w-10/12 mx-auto">
-        <div class="flex items-center">
+        <div class="flex items-center min-w-fit">
           <img alt="A sophisticated UI with a menu allowing unlimited creativity" class="rounded-md shadow-md" :width="470" :height="264" src="/images/screenshot-complex.webp"/>
         </div>
         <div class="h-fit my-auto">

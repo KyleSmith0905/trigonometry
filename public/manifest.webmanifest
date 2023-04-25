@@ -1,4 +1,11 @@
 {
+  "short_name": "TrigSim",
+  "name": "Trigonometry Simulator",
+  "description": "Visualize the connections between polar and cartesian coordinates with trigonometric functions.",
+  "id": "/graph",
+  "start_url": "/graph",
+  "scope": "/",
+  "display": "fullscreen",
   "background_color": "#f1f5f9",
   "icons": [
     {
@@ -42,6 +49,20 @@
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "./screenshots/screenshot1.png",
+      "type": "image/png",
+      "sizes": "540x720",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "./screenshots/screenshot2.jpg",
+      "type": "image/jpg",
+      "sizes": "720x540",
+      "form_factor": "wide"
     }
   ]
 }
