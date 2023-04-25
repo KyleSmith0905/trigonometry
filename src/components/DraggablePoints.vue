@@ -60,10 +60,10 @@
     activePointName.value = pointName;
     event.preventDefault()
 
-    window.addEventListener('touchend', dragEnd);
-    window.addEventListener('mouseup', dragEnd);
-    window.addEventListener('touchmove', drag);
-    window.addEventListener('mousemove', drag);
+    window.addEventListener('touchend', dragEnd, {passive: true});
+    window.addEventListener('mouseup', dragEnd, {passive: true});
+    window.addEventListener('touchmove', drag, {passive: true});
+    window.addEventListener('mousemove', drag, {passive: true});
   }
 
   // When user releases, snap the point to the grid

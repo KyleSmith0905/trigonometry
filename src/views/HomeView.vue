@@ -44,28 +44,20 @@
       </div>
     </div>
     <div class="bg-slate-50 py-4">
-      <div class="max-w-4xl w-10/12 mx-auto">
-        <h2 class="text-lg font-bold font-mono text-slate-700">Sign In</h2>
-        <p class="text-slate-800">Explore the power of trigonometric functions with our easy-to-use interface. See how these functions build the bridge between cartesian coordinates and polar coordinates.</p>
-        <div class="h-4"></div>
-        <button class="block px-4 py-2 mx-auto rounded-md hover:bg-slate-200 transition-colors">Sign In</button>
-      </div>
-    </div>
-    <div class="bg-slate-100 py-4">
       <div class="flex flex-wrap sm:flex-nowrap gap-6 max-w-4xl w-10/12 mx-auto">
         <div class="h-fit my-auto">
           <h2 class="text-lg font-bold font-mono text-slate-700">Easy To Use</h2>
           <p class="text-slate-800">Explore the power of trigonometric functions with our easy-to-use interface. See how these functions build the bridge between cartesian coordinates and polar coordinates.</p>
         </div>
         <div class="flex items-center">
-          <img class="rounded-md shadow-md" src="/images/screenshot-simple.png"/>
+          <img alt="A minimal simple flat UI" class="rounded-md shadow-md" :width="425" :height="239" src="/images/screenshot-simple.webp"/>
         </div>
       </div>
     </div>
-    <div class="bg-slate-50 py-4">
+    <div class="bg-slate-100 py-4">
       <div class="flex flex-wrap sm:flex-nowrap gap-6 max-w-4xl w-10/12 mx-auto">
         <div class="flex items-center">
-          <img class="rounded-md shadow-md" src="/images/screenshot-complex.png"/>
+          <img alt="A sophisticated UI with a menu allowing unlimited creativity" class="rounded-md shadow-md" :width="470" :height="264" src="/images/screenshot-complex.webp"/>
         </div>
         <div class="h-fit my-auto">
           <h2 class="text-lg font-bold font-mono text-slate-700">Unlimited Customization</h2>
@@ -75,6 +67,3 @@
     </div>
   </TheContainer>
 </template>
-
-<style>
-</style>

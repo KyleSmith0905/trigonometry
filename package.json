@@ -10,6 +10,7 @@
     "build": "run-p type-check build-only",
     "build:android": "npm run build && cap sync android && cap open android",
     "assets": "npx @capacitor/assets generate --iconBackgroundColor #f1f5f9 --iconBackgroundColorDark #0f172a --splashBackgroundColor #f1f5f9 --splashBackgroundColorDark #0f172a --android --ios",
+    "assets:pwa": "npx @capacitor/assets generate --iconBackgroundColor #f1f5f9 --iconBackgroundColorDark #0f172a --splashBackgroundColor #f1f5f9 --splashBackgroundColorDark #0f172a --pwa --pwaManifestPath public/manifest.webmanifest",
     "assets:android": "npx @capacitor/assets generate --iconBackgroundColor #f1f5f9 --iconBackgroundColorDark #0f172a --splashBackgroundColor #f1f5f9 --splashBackgroundColorDark #0f172a --android",
     "preview": "vite preview",
     "build-only": "vite build",
