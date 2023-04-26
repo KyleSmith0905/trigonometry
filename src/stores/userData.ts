@@ -1,21 +1,21 @@
 import { firestore } from '@/helpers/firebase';
 import { Capacitor } from '@capacitor/core';
-import { collection, doc, type DocumentData } from 'firebase/firestore';
+import { collection, doc, onSnapshot, type DocumentData, type Unsubscribe } from 'firebase/firestore';
 import { defineStore } from 'pinia';
 import { ref, watch } from 'vue';
-import { useCurrentUser, useDocument, type _RefFirestore } from 'vuefire';
+import { useCurrentUser } from 'vuefire';
 
 export const useUserData = defineStore('userData', () => {
   const userAuth = useCurrentUser();
-  const userData = ref<_RefFirestore<DocumentData | undefined>>();
+  const userData = ref<DocumentData | undefined>();
   const isPremium = ref<boolean>(false);
+  const userDataUnsubscribe = ref<Unsubscribe>()
 
   // Mobile automatically comes with premium
   const isNative = Capacitor.getPlatform() !== 'web';
   if (isNative) isPremium.value = true;
   
   watch([userAuth], async ([currentUser]) => {
-    console.log('start of user data', isNative)
     const userId = currentUser?.uid;
     if (!userId) {
       if (!isNative) {
@@ -24,14 +24,19 @@ export const useUserData = defineStore('userData', () => {
       }
       return;
     };
-    const document = useDocument(doc(collection(firestore, 'users'), `${userId}`));
-    userData.value = document;
-    console.log('after document fetch');
 
-    const documentData = await document.promise.value;
-    if (!isNative) {
-      isPremium.value = documentData?.membership === 'premium';
+    if (userDataUnsubscribe.value) {
+      userDataUnsubscribe.value();
     }
+
+    userDataUnsubscribe.value = onSnapshot(doc(collection(firestore, 'users'), `${userId}`), {
+      next: (document) => {
+        userData.value = document.data();
+        if (!isNative) {
+          isPremium.value = userData.value?.membership === 'premium';
+        }
+      }
+    });
   })
 
   return {userAuth, userData, isPremium}

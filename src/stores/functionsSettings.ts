@@ -35,9 +35,7 @@ export const useFunctionsSettings = defineStore('functionsSettings', () => {
   
   const userDataStore = useUserData();
   watch([userDataStore], ([currentUserDataStore]) => {
-    console.log('function settings changed');
-    const hasPremium = currentUserDataStore.isPremium;
-    if (hasPremium) {
+    if (currentUserDataStore.isPremium) {
       secant.value.locked = false;
       cosecant.value.locked = false;
       cotangent.value.locked = false;
