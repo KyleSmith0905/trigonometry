@@ -74,6 +74,7 @@
             </a>
           </div>
           <ActionButton v-if="currentUser?.uid" @click="signOut()" text="Sign Out"/>
+          <ActionButton text="Contact Us" to="/contact"/>
           <ActionButton text="Privacy Policy" to="/privacy"/>
           <ActionButton text="Terms of Service" to="/terms"/>
         </div>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
   import TheContainer from '@/components/TheContainer.vue';
-
 </script>
 
 <template>
@@ -35,21 +34,5 @@
         </div>
       </div>
     </div>
-    <div class="bg-slate-50 py-4">
-      <h2 class="font-mono text-lg font-bold text-center text-slate-700">Phone</h2>
-      <div class="flex flex-wrap sm:flex-nowrap gap-6 max-w-4xl w-10/12 mx-auto">
-        <div class="h-fit my-auto">
-          <p class="text-slate-800">If you have an time-sensitive matter, a text would likely reach me the soonest. Please use Discord or email for any other inquiries unless it is extremely urgent.</p>
-          <p class="text-slate-800 mt-2">This is my personal phone. I do not answer unsolicited calls (due to potential spam callers).</p>
-        </div>
-        <div class="flex items-center gap-2">
-          <a class="whitespace-nowrap text-lg text-slate-800" href="tel:941-225-5815">+1 (941) 225-5815</a>
-          <ion-icon class="text-2xl text-slate-800" name='chatbox-ellipses'></ion-icon>
-        </div>
-      </div>
-    </div>
   </TheContainer>
 </template>
-
-<style>
-</style>
