@@ -1,4 +1,4 @@
-<script setup lang="ts">
+e<script setup lang="ts">
   import TheContainer from '@/components/TheContainer.vue';
 </script>
 <template>
@@ -6,7 +6,7 @@
     <div class="bg-slate-100 py-4">
       <div class="max-w-4xl w-10/12 mx-auto">
         <h1 class="header">Privacy Policy of Trigonometry Simulator</h1>
-        <p class="paragraph">Trigonometry Simulator operates the <a target="_blank" href="https://trigsim.com">https://trigsim.com</a> website, which provides the SERVICE.</p>
+        <p class="paragraph">Trigonometry Simulator operates the <a target="_blank" href="https://www.trigsim.com">https://www.trigsim.com</a> website, which provides the SERVICE.</p>
         <p class="paragraph mt-2">This page is used to inform website visitors regarding our policies with the collection, use, and disclosure of Personal Information if anyone decided to use our Service, the Trigonometry Simulator website.</p>
         <p class="paragraph mt-2">If you choose to use our Service, then you agree to the collection and use of information in relation with this policy. The Personal Information that we collect are used for providing and improving the Service. We will not use or share your information with anyone except as described in this Privacy Policy.</p>
         <p class="paragraph mt-2">The terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, which is accessible at <a target="_blank" href="https://trigsim.com">https://trigsim.com</a>, unless otherwise defined in this Privacy Policy.</p>
