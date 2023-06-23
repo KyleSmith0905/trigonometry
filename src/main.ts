@@ -2,7 +2,7 @@ import { createApp } from 'vue';
 import { createHead } from '@vueuse/head';
 import { createPinia } from 'pinia';
 import { VueFire, VueFireAuth } from 'vuefire'
-
+import VueGtag from "vue-gtag";
 import './index.css';
 
 import App from './App.vue';
@@ -23,5 +23,9 @@ app.use(VueFire, {
     VueFireAuth(),
   ],
 });
+app.use(VueGtag, {
+  s
+  config: { id: "G-YHLCN88ZG8" }
+})
 
 app.mount('#app')
