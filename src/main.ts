@@ -24,8 +24,7 @@ app.use(VueFire, {
   ],
 });
 app.use(VueGtag, {
-  s
   config: { id: "G-YHLCN88ZG8" }
-})
+}, router)
 
 app.mount('#app')
